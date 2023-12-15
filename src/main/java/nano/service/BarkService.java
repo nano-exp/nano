@@ -18,8 +18,8 @@ public class BarkService {
 
     public void onBark(@NotNull String payload) {
         log.info("bark body: %s".formatted(payload));
-        var title = UriUtils.encode("Nano Bark", "utf8");
-        var content = UriUtils.encode(String.valueOf(payload), "utf8");
+        var title = UriUtils.encodeQuery("Nano Bark", "utf8");
+        var content = UriUtils.encodeQuery(payload, "utf8");
         for (var url : this.barkNoticeUrl) {
             Fetch.fetchString(url.formatted(title, content));
         }
