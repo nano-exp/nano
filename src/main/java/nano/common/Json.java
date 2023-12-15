@@ -32,9 +32,9 @@ public abstract class Json {
     }
 
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> parseMap(String jsonString) {
+    public static <T> Map<String, T> parseMap(String jsonString) {
         try {
-            return (Map<String, Object>) objectMapper.readValue(jsonString, Map.class);
+            return (Map<String, T>) objectMapper.readValue(jsonString, Map.class);
         } catch (JsonProcessingException ex) {
             UnsafeUtils.getUnsafe().throwException(ex);
             return Map.of();

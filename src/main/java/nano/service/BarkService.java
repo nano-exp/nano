@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class BarkService {
 
-    private final List<String> barkNoticeUrl = initBarkNoticeUrl();
+    private final List<String> barkNoticeUrl = this.initBarkNoticeUrl();
 
     public void onBark(String payload) {
         log.info("bark body: %s".formatted(payload));
