@@ -15,14 +15,19 @@ import java.util.List;
 @Service
 public class BarkService {
 
+    private static final String defaultBarkTitle = "[Nano Bark]";
     private final List<String> barkNoticeUrl = this.initBarkNoticeUrl();
 
     public void onBark(@NotNull String payload) {
         log.info("bark body: %s".formatted(payload));
-        var title = UriUtils.encodeQuery("Nano Bark", "utf8");
-        var content = UriUtils.encodeQuery(payload, "utf8");
+        this.bulkTriggerNotice(defaultBarkTitle, payload);
+    }
+
+    public void bulkTriggerNotice(@NotNull String title, @NotNull String content) {
+        var encodedTitle = UriUtils.encodeQuery(title, "utf8");
+        var encodedContent = UriUtils.encodeQuery(content, "utf8");
         for (var url : this.barkNoticeUrl) {
-            Fetch.fetchString(url.formatted(title, content));
+            Fetch.fetchString(url.formatted(encodedTitle, encodedContent));
         }
     }
 

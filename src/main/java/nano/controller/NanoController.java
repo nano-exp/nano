@@ -31,7 +31,7 @@ public class NanoController {
             payload = getCurrentQueryString();
         }
         if (ObjectUtils.isEmpty(payload)) {
-            payload = "Bark from %s".formatted(getCurrentRequestAddr());
+            payload = "[Bark from %s]".formatted(getCurrentRequestAddr());
         }
         this.barkService.onBark(payload);
         return ResponseEntity.ok(payload);
