@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import nano.common.Json;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.util.UriUtils;
 
+import java.net.URLEncoder;
 import java.util.List;
 
 @Slf4j
@@ -17,7 +19,11 @@ public class BarkService {
     public void onBark(String payload) {
         log.info("bark body: %s".formatted(payload));
         for (String url : this.barkNoticeUrl) {
-            Fetch.fetchString(url.formatted("Nano Bark", payload));
+            Fetch.fetchString(url.formatted(
+                    UriUtils.encode("Nano Bark", "utf8"),
+                    UriUtils.encode(String.valueOf(payload), "utf8")
+
+            ));
         }
     }
 
