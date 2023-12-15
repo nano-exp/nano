@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fetch.support.UnsafeUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Map;
 
 public abstract class Json {
@@ -21,7 +22,17 @@ public abstract class Json {
     }
 
     @SuppressWarnings("unchecked")
-    public static Map<String, Object> parse(String jsonString) {
+    public static <T> List<T> parseList(String jsonString) {
+        try {
+            return (List<T>) objectMapper.readValue(jsonString, List.class);
+        } catch (JsonProcessingException ex) {
+            UnsafeUtils.getUnsafe().throwException(ex);
+            return List.of();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> parseMap(String jsonString) {
         try {
             return (Map<String, Object>) objectMapper.readValue(jsonString, Map.class);
         } catch (JsonProcessingException ex) {
