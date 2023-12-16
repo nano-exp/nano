@@ -17,7 +17,7 @@ public class BarkService {
     private final List<String> barkNoticeUrl;
 
     public BarkService(MapStore mapStore) {
-        this.barkNoticeUrl = mapStore.get("barkNoticeUrl");
+        this.barkNoticeUrl = mapStore.get("barkNoticeUrl", List.of());
     }
 
     public void onBark(@NotNull String payload) {

@@ -33,6 +33,11 @@ public class MapStore {
         }
     }
 
+    public <T> T get(@NotNull String key, T defaultValue) {
+        T value = this.get(key);
+        return value == null ? defaultValue : value;
+    }
+
     @SuppressWarnings("unchecked")
     public <T> T get(@NotNull String key) {
         return (T) this.store.get(key);
