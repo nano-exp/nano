@@ -2,10 +2,9 @@ package nano.service;
 
 import fetch.Fetch;
 import lombok.extern.slf4j.Slf4j;
-import nano.common.Json;
+import nano.common.MapStore;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.util.UriUtils;
 
 import java.util.List;
@@ -15,7 +14,11 @@ import java.util.List;
 public class BarkService {
 
     private static final String defaultBarkTitle = "[Nano Bark]";
-    private final List<String> barkNoticeUrl = this.initBarkNoticeUrl();
+    private final List<String> barkNoticeUrl;
+
+    public BarkService(MapStore mapStore) {
+        this.barkNoticeUrl = mapStore.get("barkNoticeUrl");
+    }
 
     public void onBark(@NotNull String payload) {
         log.info("bark body: %s".formatted(payload));
@@ -27,15 +30,6 @@ public class BarkService {
         var encodedContent = UriUtils.encodeQuery(content, "utf8");
         for (var url : this.barkNoticeUrl) {
             Fetch.fetchString(url.formatted(encodedTitle, encodedContent));
-        }
-    }
-
-    private @NotNull List<String> initBarkNoticeUrl() {
-        var barkNoticeUrl = System.getenv("barkNoticeUrl");
-        if (!ObjectUtils.isEmpty(barkNoticeUrl)) {
-            return Json.parseList(barkNoticeUrl);
-        } else {
-            return List.of();
         }
     }
 }
