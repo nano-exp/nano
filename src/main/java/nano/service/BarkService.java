@@ -4,7 +4,6 @@ import fetch.Fetch;
 import lombok.extern.slf4j.Slf4j;
 import nano.common.Json;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.util.UriUtils;
@@ -20,10 +19,10 @@ public class BarkService {
 
     public void onBark(@NotNull String payload) {
         log.info("bark body: %s".formatted(payload));
-        this.bulkTriggerNotice(defaultBarkTitle, payload);
+        this.batchTriggerNotice(defaultBarkTitle, payload);
     }
 
-    public void bulkTriggerNotice(@NotNull String title, @NotNull String content) {
+    public void batchTriggerNotice(@NotNull String title, @NotNull String content) {
         var encodedTitle = UriUtils.encodeQuery(title, "utf8");
         var encodedContent = UriUtils.encodeQuery(content, "utf8");
         for (var url : this.barkNoticeUrl) {
