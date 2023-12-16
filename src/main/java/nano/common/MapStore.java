@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -49,7 +50,7 @@ public class MapStore {
     private void persist() {
         var s = Json.stringify(this.store);
         try (var is = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8))) {
-            Files.copy(is, this.storePath);
+            Files.copy(is, this.storePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ex) {
             throw new UncheckedIOException(ex);
         }
