@@ -4,7 +4,9 @@ import nano.common.MapStore;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @SpringBootApplication
 public class NanoApplication {
 
@@ -14,6 +16,8 @@ public class NanoApplication {
 
     @Bean
     public MapStore mapStore() {
-        return new MapStore("store.json");
+        var store = new MapStore("store.json");
+        store.restore();
+        return store;
     }
 }

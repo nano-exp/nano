@@ -21,6 +21,10 @@ public abstract class Json {
         }
     }
 
+    public static <T> @NotNull T convertValue(@NotNull Object object, @NotNull Class<T> clazz) {
+        return objectMapper.convertValue(object, clazz);
+    }
+
     @SuppressWarnings("unchecked")
     public static <T> List<T> parseList(String jsonString) {
         try {

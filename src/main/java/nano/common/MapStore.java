@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 public class MapStore {
 
@@ -22,6 +21,9 @@ public class MapStore {
 
     public MapStore(@NotNull String pathUrl) {
         this.storePath = Paths.get(pathUrl);
+    }
+
+    public void restore() {
         try (var os = new ByteArrayOutputStream()) {
             if (Files.exists(this.storePath)) {
                 Files.copy(this.storePath, os);
@@ -45,14 +47,9 @@ public class MapStore {
 
     public void set(@NotNull String key, @NotNull Object value) {
         this.store.put(key, value);
-        this.persistAsync();
     }
 
-    private void persistAsync() {
-        CompletableFuture.runAsync(this::persist);
-    }
-
-    private void persist() {
+    public void persist() {
         var s = Json.stringify(this.store);
         try (var is = new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8))) {
             Files.copy(is, this.storePath, StandardCopyOption.REPLACE_EXISTING);

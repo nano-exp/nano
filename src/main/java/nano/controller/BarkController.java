@@ -28,7 +28,7 @@ public class BarkController {
         if (ObjectUtils.isEmpty(payload)) {
             payload = "[Bark from %s]".formatted(getCurrentRequestAddr());
         }
-        this.barkService.onBark(payload);
+        this.barkService.onBarkMessage(payload);
         return ResponseEntity.ok(payload);
     }
 
