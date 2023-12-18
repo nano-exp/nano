@@ -10,7 +10,7 @@ public class CornService {
 
     private final BarkService barkService;
 
-    @Scheduled(fixedDelay = 10 * 1000)
+    @Scheduled(fixedDelay = 30 * 1000)
     public void scheduledForBark() {
         this.barkService.sendNoticeMessageNeeded();
     }
