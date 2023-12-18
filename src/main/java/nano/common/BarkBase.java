@@ -19,10 +19,10 @@ public class BarkBase {
     @Data
     public static class BarkMessage {
 
-        private String id;
+        private String id = UUID.randomUUID().toString();
+        private Boolean acked = false;
+        private Integer noticeCount = 0;
         private String payload;
-        private Integer noticeCount;
-        private Boolean acked;
 
         public void increaseNoticeCount() {
             this.noticeCount++;
@@ -35,8 +35,6 @@ public class BarkBase {
 
     public static BarkMessage createMessage(String payload) {
         BarkMessage message = new BarkMessage();
-        message.setId(UUID.randomUUID().toString());
-        message.setNoticeCount(0);
         message.setPayload(payload);
         return message;
     }
