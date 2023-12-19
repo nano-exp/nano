@@ -2,6 +2,7 @@ package nano.common;
 
 import lombok.Data;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,12 +24,20 @@ public class BarkBase {
         private Boolean acked = false;
         private Integer noticeCount = 0;
         private String payload;
+        private String ackTime;
+        private String createTime = Instant.now().toString();
 
         public void increaseNoticeCount() {
             this.noticeCount++;
         }
+
+        public void ack() {
+            this.ackTime = Instant.now().toString();
+            this.acked = true;
+        }
     }
 
+    private String barkHost;
     private List<BarkTarget> barkTargets = new ArrayList<>();
     private List<BarkMessage> barkMessages = new ArrayList<>();
     private Integer maxNoticeCount;
