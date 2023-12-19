@@ -32,8 +32,10 @@ public class BarkBase {
         }
 
         public void ack() {
-            this.ackTime = Instant.now().toString();
-            this.acked = true;
+            if (!this.acked) {
+                this.ackTime = Instant.now().toString();
+                this.acked = true;
+            }
         }
     }
 
