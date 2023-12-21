@@ -66,7 +66,7 @@ public class BarkService {
     public void sendNotice(@NotNull BarkMessage message) {
         var encodedTitle = UriUtils.encodeQuery(defaultBarkTitle, "utf8");
         var encodedContent = UriUtils.encodeQuery(message.getPayload(), "utf8");
-        var urlPath = "/bark/ack-message.html?id=%s".formatted(message.getId());
+        var urlPath = "/bark/ack-message/index.html?id=%s".formatted(message.getId());
         var encodedUrl = UriUtils.encode(new URL(new URL(this.barkHost), urlPath).toString(), "utf8");
         this.barkMessageRepository.increaseNoticeCount(message.getId());
         var barkTargetList = this.barkTargetRepository.getAll();
