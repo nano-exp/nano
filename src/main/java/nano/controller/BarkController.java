@@ -39,14 +39,21 @@ public class BarkController {
     }
 
     @RequestMapping(path = "/api/bark/ack/{id}")
-    public ResponseEntity<?> barkAck(@PathVariable("id") String id) {
+    public ResponseEntity<?> barkAck(@PathVariable("id") Integer id) {
         var result = this.barkService.ackBarkMessage(id);
         return ResponseEntity.ok(result);
     }
 
     private static String getCurrentRequestAddr() {
         var r = getCurrentRequest();
-        return r != null ? r.getRemoteAddr() : null;
+        if (r == null) {
+            return null;
+        }
+        var ip = r.getHeader("X-Real-IP");
+        if (ip == null) {
+            ip = r.getRemoteAddr();
+        }
+        return ip;
     }
 
     private static HttpServletRequest getCurrentRequest() {

@@ -15,8 +15,4 @@ public class CornService {
         this.barkService.sendNoticeMessageNeeded();
     }
 
-    @Scheduled(fixedDelay = 60 * 60 * 1000)
-    public void scheduledPersistBarkBase() {
-        this.barkService.persistStore();
-    }
 }

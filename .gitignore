@@ -4,4 +4,4 @@ build/
 .idea
 .vscode/
 .env
-store.json
+nano.db

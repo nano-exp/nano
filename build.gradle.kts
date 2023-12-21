@@ -24,6 +24,8 @@ dependencies {
     // jetbrains annotations
     implementation("org.jetbrains:annotations:24.1.0")
     //
+    implementation("org.xerial:sqlite-jdbc:3.44.1.0")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
