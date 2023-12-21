@@ -11,6 +11,7 @@ import nano.repository.BarkMessageRepository;
 import nano.repository.BarkTargetRepository;
 import nano.repository.NanoMetaRepository;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriUtils;
 
@@ -39,7 +40,7 @@ public class BarkService {
         this.maxNoticeCount = Integer.parseInt(nanoMeta.get("max_notice_count"));
     }
 
-    public void onBarkMessage(@NotNull String payload) {
+    public void onBark(@NotNull String payload) {
         log.info("bark body: %s".formatted(payload));
         var message = new BarkMessage();
         message.setPayload(payload);
@@ -48,24 +49,24 @@ public class BarkService {
         var id = this.barkMessageRepository.create(message);
         if (id != null) {
             message.setId(id);
-            this.sendNoticeMessage(message);
+            this.sendNotice(message);
         }
     }
 
-    public void sendNoticeMessageNeeded() {
+    public void sendNoticeForNotAckedMessage() {
         var messageList = this.barkMessageRepository.getNotAckedList();
         for (var message : messageList) {
             if (message.getNoticeCount() <= this.maxNoticeCount) {
-                this.sendNoticeMessage(message);
+                this.sendNotice(message);
             }
         }
     }
 
     @SneakyThrows
-    public void sendNoticeMessage(@NotNull BarkMessage message) {
+    public void sendNotice(@NotNull BarkMessage message) {
         var encodedTitle = UriUtils.encodeQuery(defaultBarkTitle, "utf8");
         var encodedContent = UriUtils.encodeQuery(message.getPayload(), "utf8");
-        var urlPath = "/api/bark/ack/%s".formatted(message.getId());
+        var urlPath = "/bark/ack-message.html?id=%s".formatted(message.getId());
         var encodedUrl = UriUtils.encode(new URL(new URL(this.barkHost), urlPath).toString(), "utf8");
         this.barkMessageRepository.increaseNoticeCount(message.getId());
         var barkTargetList = this.barkTargetRepository.getAll();
@@ -76,11 +77,15 @@ public class BarkService {
         }
     }
 
-    public BarkMessage ackBarkMessage(@NotNull Integer id) {
+    public @Nullable BarkMessage getMessage(@NotNull Integer id) {
+        return this.barkMessageRepository.getById(id);
+    }
+
+    public @Nullable BarkMessage ackMessage(@NotNull Integer id) {
         var message = this.barkMessageRepository.getById(id);
-        if (message != null) {
+        if (message != null && message.getAckTime() == null) {
             var now = Instant.now().toString();
-            this.barkMessageRepository.ack(id, now);
+            this.barkMessageRepository.updateAckTime(id, now);
             message.setAckTime(now);
         }
         return message;

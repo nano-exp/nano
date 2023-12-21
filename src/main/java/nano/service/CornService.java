@@ -12,7 +12,7 @@ public class CornService {
 
     @Scheduled(fixedDelay = 30 * 1000)
     public void scheduledSendBarkMessage() {
-        this.barkService.sendNoticeMessageNeeded();
+        this.barkService.sendNoticeForNotAckedMessage();
     }
 
 }

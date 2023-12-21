@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nano.common.Json;
 import nano.service.BarkService;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -34,14 +35,20 @@ public class BarkController {
             }
         };
         var message = getMessage.get();
-        this.barkService.onBarkMessage(message);
+        this.barkService.onBark(message);
         return ResponseEntity.ok(message);
     }
 
-    @RequestMapping(path = "/api/bark/ack/{id}")
-    public ResponseEntity<?> barkAck(@PathVariable("id") Integer id) {
-        var result = this.barkService.ackBarkMessage(id);
+    @PostMapping(path = "/api/bark/ack-message/{id}")
+    public ResponseEntity<?> ackMessage(@PathVariable("id") Integer id) {
+        var result = this.barkService.ackMessage(id);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping(path = "/api/bark/message/{id}")
+    public ResponseEntity<?> getMessage(@PathVariable("id") Integer id) {
+        var message = this.barkService.getMessage(id);
+        return ResponseEntity.ok(message);
     }
 
     private static String getCurrentRequestAddr() {
@@ -56,7 +63,7 @@ public class BarkController {
         return ip;
     }
 
-    private static HttpServletRequest getCurrentRequest() {
+    private static @Nullable HttpServletRequest getCurrentRequest() {
         if (RequestContextHolder.currentRequestAttributes() instanceof ServletRequestAttributes requestAttributes) {
             return requestAttributes.getRequest();
         }
