@@ -21,33 +21,33 @@ public class BarkMessageRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public synchronized Integer create(@NotNull BarkMessage message) {
-        var source = new BeanPropertySqlParameterSource(message);
         var insertSql = """
                 INSERT INTO bark_message (payload, ack_time, create_time, notice_count)
                 VALUES (:payload, :ackTime, :createTime, :noticeCount);
                 """;
+        var source = new BeanPropertySqlParameterSource(message);
         this.jdbcTemplate.update(insertSql, source);
         var selectIdSql = "SELECT LAST_INSERT_ROWID();";
         return this.jdbcTemplate.queryForObject(selectIdSql, Map.of(), new SingleColumnRowMapper<>());
     }
 
     public @NotNull List<BarkMessage> getNotAckedList() {
-        var rowMapper = new BeanPropertyRowMapper<>(BarkMessage.class);
         var sql = """
                 SELECT id, payload, ack_time, create_time, notice_count
                 FROM bark_message
                 WHERE ack_time IS NULL;
                 """;
+        var rowMapper = new BeanPropertyRowMapper<>(BarkMessage.class);
         return this.jdbcTemplate.query(sql, rowMapper);
     }
 
     public @Nullable BarkMessage getById(Integer id) {
-        var rowMapper = new BeanPropertyRowMapper<>(BarkMessage.class);
         var sql = """
                 SELECT id, payload, ack_time, create_time, notice_count
                 FROM bark_message
                 WHERE id = :id;
                 """;
+        var rowMapper = new BeanPropertyRowMapper<>(BarkMessage.class);
         var messageList = this.jdbcTemplate.query(sql, Map.of("id", id), rowMapper);
         if (CollectionUtils.isEmpty(messageList)) {
             return null;

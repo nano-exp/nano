@@ -16,8 +16,8 @@ public class NanoMetaRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public @NotNull List<NanoMeta> getAll() {
-        var rowMapper = new BeanPropertyRowMapper<>(NanoMeta.class);
         var sql = "SELECT id, name, value, description FROM nano_meta;";
+        var rowMapper = new BeanPropertyRowMapper<>(NanoMeta.class);
         return this.jdbcTemplate.query(sql, rowMapper);
     }
 }
