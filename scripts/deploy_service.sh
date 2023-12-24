@@ -8,4 +8,4 @@ docker run -d \
   -p 9000:9000 \
   --name nano \
   openjdk:21 \
-  "/app/scripts/start_nano.sh"
+  "/app/scripts/start_service.sh"
