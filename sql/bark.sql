@@ -1,4 +1,4 @@
-CREATE TABLE bark_target
+CREATE TABLE IF NOT EXISTS bark_target
 (
     id      INTEGER PRIMARY KEY AUTOINCREMENT,
     name    TEXT,
@@ -6,7 +6,7 @@ CREATE TABLE bark_target
     enabled BOOLEAN
 );
 
-CREATE TABLE bark_message
+CREATE TABLE IF NOT EXISTS bark_message
 (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
     payload      TEXT,

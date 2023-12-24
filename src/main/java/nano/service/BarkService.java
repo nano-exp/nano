@@ -34,6 +34,7 @@ public class BarkService {
 
     @PostConstruct
     public void init() {
+        this.nanoMetaRepository.assertNanoMetaTableExists();
         var nanoMetaList = this.nanoMetaRepository.getAll();
         var nanoMeta = nanoMetaList.stream().collect(Collectors.toMap(NanoMeta::getName, NanoMeta::getValue));
         this.barkHost = nanoMeta.get("bark_host");

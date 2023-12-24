@@ -1,4 +1,4 @@
-CREATE TABLE nano_meta
+CREATE TABLE IF NOT EXISTS nano_meta
 (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     name        TEXT,
