@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriUtils;
 
+import java.net.URI;
 import java.net.URL;
 import java.time.Instant;
 import java.util.stream.Collectors;
@@ -68,7 +69,7 @@ public class BarkService {
         var encodedTitle = UriUtils.encodeQuery(defaultBarkTitle, "utf8");
         var encodedContent = UriUtils.encodeQuery(message.getPayload(), "utf8");
         var urlPath = "/bark/ack-message/index.html?id=%s".formatted(message.getId());
-        var encodedUrl = UriUtils.encode(new URL(new URL(this.barkHost), urlPath).toString(), "utf8");
+        var encodedUrl = UriUtils.encode(URI.create(this.barkHost).resolve(urlPath).toString(), "utf8");
         this.barkMessageRepository.increaseNoticeCount(message.getId());
         var barkTargetList = this.barkTargetRepository.getAll();
         for (var it : barkTargetList) {
