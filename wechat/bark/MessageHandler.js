@@ -1,9 +1,9 @@
-import applyAckMessage from './apis/applyAckMessage.js'
+import applyAckMessage from '../apis/applyAckMessage.js'
 
 const ACK_RE = /.*ack (\d+)$/
 const AT_RE = /@Nano *$/
 
-export class MessageHandler {
+export default class MessageHandler {
     constructor(bot) {
         this.bot = bot
     }
