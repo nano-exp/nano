@@ -1,7 +1,7 @@
 import applyAckMessage from './apis/applyAckMessage.js'
 
 const ACK_RE = /.*ack (\d+)$/
-const AT_RE = /@Nano$/
+const AT_RE = /@Nano *$/
 
 export class MessageHandler {
     constructor(bot) {
