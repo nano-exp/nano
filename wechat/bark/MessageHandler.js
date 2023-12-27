@@ -1,4 +1,5 @@
 import applyAckMessage from '../apis/applyAckMessage.js'
+import { getCSTString } from '../utils.js'
 
 const ACK_RE = /.*ack (\d+)$/
 const AT_RE = /@Nano *$/
@@ -21,9 +22,9 @@ export default class MessageHandler {
         const r = await applyAckMessage(id, content)
         if (r) {
             const m = JSON.parse(r)
-            bot.sendMsg(`✅Message ${id} acked at ${m.ackTime}`, message.FromUserName)
+            bot.sendMsg(`✅Message [${id}] acked at ${getCSTString(m.ackTime)}`, message.FromUserName)
         } else {
-            bot.sendMsg(`❌Message ${id} not found`, message.FromUserName)
+            bot.sendMsg(`❌Message [${id}] not found`, message.FromUserName)
         }
     }
 

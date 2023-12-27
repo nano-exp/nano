@@ -26,7 +26,7 @@ export default class NoticeSender {
     }
 
     buildWxMessage(notice) {
-        return `⚠️ID: ${notice.message.id}\n${notice.message.payload}`
+        return `⚠️Message: [${notice.message.id}]\n${notice.message.payload}`
     }
 
     async sendMessage() {

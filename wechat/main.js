@@ -1,7 +1,7 @@
 import { getWxBot } from './wx_bot.js'
 import MessageHandler from './bark/MessageHandler.js'
 import NoticeSender from './bark/NoticeSender.js'
-import { sleep } from './schedule.js'
+import { sleep } from './utils.js'
 
 const bot = await getWxBot()
 
