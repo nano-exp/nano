@@ -9,5 +9,5 @@ export default async function applyAckMessage(id, comment) {
             'Content-Type': 'text/plain',
         },
     })
-    return response.json()
+    return response.text()
 }
