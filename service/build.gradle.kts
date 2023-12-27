@@ -40,5 +40,6 @@ tasks {
     }
     test {
         useJUnitPlatform()
+        workingDir = rootDir
     }
 }

@@ -1,4 +1,3 @@
-
 pluginManagement {
     plugins {
         id("org.springframework.boot") version "3.2.0"
@@ -11,4 +10,5 @@ rootProject.name = "nano"
 include(
         "service",
         "www",
+        "wechat"
 )

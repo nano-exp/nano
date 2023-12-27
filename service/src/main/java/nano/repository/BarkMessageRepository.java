@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -22,8 +23,8 @@ public class BarkMessageRepository {
 
     public synchronized Integer create(@NotNull BarkMessage message) {
         var insertSql = """
-                INSERT INTO bark_message (payload, ack_time, create_time, notice_count)
-                VALUES (:payload, :ackTime, :createTime, :noticeCount);
+                INSERT INTO bark_message (payload, ack_time, create_time, comment)
+                VALUES (:payload, :ackTime, :createTime, :comment);
                 """;
         var source = new BeanPropertySqlParameterSource(message);
         this.jdbcTemplate.update(insertSql, source);
@@ -33,7 +34,7 @@ public class BarkMessageRepository {
 
     public @NotNull List<BarkMessage> getNotAckedList() {
         var sql = """
-                SELECT id, payload, ack_time, create_time, notice_count
+                SELECT id, payload, ack_time, create_time, comment
                 FROM bark_message
                 WHERE ack_time IS NULL;
                 """;
@@ -43,7 +44,7 @@ public class BarkMessageRepository {
 
     public @Nullable BarkMessage getById(Integer id) {
         var sql = """
-                SELECT id, payload, ack_time, create_time, notice_count
+                SELECT id, payload, ack_time, create_time, comment
                 FROM bark_message
                 WHERE id = :id;
                 """;
@@ -55,21 +56,14 @@ public class BarkMessageRepository {
         return messageList.get(0);
     }
 
-    public void updateAckTime(@NotNull Integer id, @NotNull String time) {
+    public void updateAckTime(@NotNull Integer id, @NotNull String time, @NotNull String comment) {
         var sql = """
                 UPDATE bark_message
-                SET ack_time = :time
+                SET ack_time = :time,
+                    comment  = :comment
                 WHERE id = :id;
                 """;
-        this.jdbcTemplate.update(sql, Map.of("id", id, "time", time));
-    }
-
-    public void increaseNoticeCount(@NotNull Integer id) {
-        var sql = """
-                UPDATE bark_message
-                SET notice_count = notice_count + 1
-                WHERE id = :id;
-                """;
-        this.jdbcTemplate.update(sql, Map.of("id", id));
+        var paramMap = Map.of("id", id, "time", time, "comment", comment);
+        this.jdbcTemplate.update(sql, paramMap);
     }
 }

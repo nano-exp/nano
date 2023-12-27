@@ -8,5 +8,5 @@ public class BarkMessage {
     private String payload;
     private String ackTime;
     private String createTime;
-    private Integer noticeCount;
+    private String comment;
 }

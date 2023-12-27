@@ -15,7 +15,11 @@ public class BarkTargetRepository {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     public List<BarkTarget> getAll() {
-        var sql = "SELECT id, name, url, enabled FROM bark_target;";
+        var sql = """
+                SELECT id, name, url, enabled
+                FROM bark_target
+                WHERE name IS NOT NULL AND url IS NOT NULL;
+                """;
         var rowMapper = new BeanPropertyRowMapper<>(BarkTarget.class);
         return this.jdbcTemplate.query(sql, rowMapper);
     }

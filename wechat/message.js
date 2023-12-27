@@ -1,0 +1,56 @@
+import applyAckMessage from './apis/applyAckMessage.js'
+
+const ACK_RE = /.*ack (\d+)$/
+const AT_RE = /@Nano$/
+
+export class MessageHandler {
+    constructor(bot) {
+        this.bot = bot
+    }
+
+    async handleAt(message) {
+        const bot = this.bot
+        bot.sendMsg(`🟢Nano bot works fine`, message.FromUserName)
+    }
+
+    async handleAck(message) {
+        const bot = this.bot
+        const content = message.Content
+        const g = ACK_RE.exec(content)
+        const id = g[1]
+        await applyAckMessage(id, content)
+        bot.sendMsg(`✅Message ${id} acked`, message.FromUserName)
+    }
+
+    async handleText(message) {
+        const content = message.Content
+        if (ACK_RE.test(content)) {
+            await this.handleAck(message)
+        } else if (AT_RE.test(content)) {
+            await this.handleAt(message)
+        }
+
+    }
+
+    async handle(message) {
+        const bot = this.bot
+        if (message.isSendBySelf) {
+            console.info('Message discarded because its outgoing')
+            return
+        }
+        if (message.CreateTime + 2 * 60 < new Date().getTime() / 1000) {
+            console.info('Message discarded because its TOO OLD(than 2 minutes)')
+            return
+        }
+
+        console.log('message', message)
+
+        switch (message.MsgType) {
+            case bot.CONF.MSGTYPE_TEXT:
+                await this.handleText(message)
+                break
+            default:
+                break
+        }
+    }
+}

@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
@@ -37,5 +38,20 @@ public class NanoMetaRepository {
                 """;
         var rowMapper = new BeanPropertyRowMapper<>(NanoMeta.class);
         return this.jdbcTemplate.query(sql, rowMapper);
+    }
+
+    public Map<String, String> getAllMap() {
+        return this.getAll().stream()
+                .collect(Collectors.toMap(NanoMeta::getName, NanoMeta::getValue));
+    }
+
+    public String getValue(@NotNull String name) {
+        var all = this.getAll();
+        for (var it : all) {
+            if (Objects.equals(it.getName(), name)) {
+                return it.getValue();
+            }
+        }
+        return null;
     }
 }

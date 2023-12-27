@@ -3,6 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 .idea
 .vscode/
+node_modules/
 .env
 nano.db
-node_modules/
+*.wechat.json

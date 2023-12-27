@@ -1,16 +1,13 @@
 package nano.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nano.common.CurrentRequest;
 import nano.common.Json;
 import nano.service.BarkService;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.Map;
 import java.util.function.Supplier;
@@ -22,7 +19,7 @@ public class BarkController {
 
     private final BarkService barkService;
 
-    @RequestMapping(path = "/api/bark")
+    @RequestMapping(path = "/api/bark/call")
     public ResponseEntity<?> bark(@RequestParam(required = false) Map<String, String> search,
                                   @RequestBody(required = false) String payload) {
         var getMessage = (Supplier<String>) () -> {
@@ -31,17 +28,18 @@ public class BarkController {
             } else if (!ObjectUtils.isEmpty(search)) {
                 return Json.stringify(search);
             } else {
-                return "[Bark from %s]".formatted(getCurrentRequestAddr());
+                return "[Bark from %s]".formatted(CurrentRequest.getCurrentRequestAddress());
             }
         };
         var message = getMessage.get();
-        this.barkService.onBark(message);
+        this.barkService.onBarkCall(message);
         return ResponseEntity.ok(message);
     }
 
     @PostMapping(path = "/api/bark/ack-message/{id}")
-    public ResponseEntity<?> ackMessage(@PathVariable("id") Integer id) {
-        var result = this.barkService.ackMessage(id);
+    public ResponseEntity<?> ackMessage(@PathVariable("id") Integer id,
+                                        @RequestBody(required = false) String body) {
+        var result = this.barkService.ackMessage(id, body != null ? body : "");
         return ResponseEntity.ok(result);
     }
 
@@ -51,22 +49,9 @@ public class BarkController {
         return ResponseEntity.ok(message);
     }
 
-    private static String getCurrentRequestAddr() {
-        var r = getCurrentRequest();
-        if (r == null) {
-            return null;
-        }
-        var ip = r.getHeader("X-Real-IP");
-        if (ip == null) {
-            ip = r.getRemoteAddr();
-        }
-        return ip;
-    }
-
-    private static @Nullable HttpServletRequest getCurrentRequest() {
-        if (RequestContextHolder.currentRequestAttributes() instanceof ServletRequestAttributes requestAttributes) {
-            return requestAttributes.getRequest();
-        }
-        return null;
+    @GetMapping(path = "/api/bark/pending-notice")
+    public ResponseEntity<?> getPendingNotice() {
+        var noticeIntentionList = this.barkService.getPendingNoticeList();
+        return ResponseEntity.ok(noticeIntentionList);
     }
 }

@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS bark_target
 
 CREATE TABLE IF NOT EXISTS bark_message
 (
-    id           INTEGER PRIMARY KEY AUTOINCREMENT,
-    payload      TEXT,
-    ack_time     TEXT,
-    create_time  TEXT,
-    notice_count INTEGER
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    payload     TEXT,
+    ack_time    TEXT DEFAULT NULL,
+    create_time TEXT,
+    comment     TEXT DEFAULT ''
 );
