@@ -58,7 +58,7 @@ public class BarkService {
 
     public List<BarkNotice> getPendingNoticeList() {
         var messageList = this.getNotAckMessageList();
-        String barkWxRoom = this.nanoMetaRepository.getValue("bark_wx_room");
+        var barkWxRoom = this.nanoMetaRepository.getValue("bark_wx_room");
         return messageList.stream().map((it) -> {
             var ni = new BarkNotice();
             ni.setMessage(it);
