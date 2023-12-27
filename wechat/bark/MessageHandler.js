@@ -1,7 +1,7 @@
 import applyAckMessage from '../apis/applyAckMessage.js'
 import { getCSTString } from '../utils.js'
 
-const ACK_RE = /.*ack (\d+)$/
+const ACK_RE = /.*ack (\d+)$/i
 const AT_RE = /@Nano *$/
 
 export default class MessageHandler {
