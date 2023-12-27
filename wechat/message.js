@@ -35,15 +35,13 @@ export class MessageHandler {
     async handle(message) {
         const bot = this.bot
         if (message.isSendBySelf) {
-            console.info('Message discarded because its outgoing')
+            // Message discarded because its outgoing
             return
         }
         if (message.CreateTime + 2 * 60 < new Date().getTime() / 1000) {
-            console.info('Message discarded because its TOO OLD(than 2 minutes)')
+            // Message discarded because its TOO OLD(than 2 minutes)
             return
         }
-
-        console.log('message', message)
 
         switch (message.MsgType) {
             case bot.CONF.MSGTYPE_TEXT:
