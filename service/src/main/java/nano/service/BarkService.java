@@ -3,11 +3,9 @@ package nano.service;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nano.model.BarkNotice;
 import nano.model.BarkMessage;
-import nano.model.BarkTarget;
+import nano.model.BarkNotice;
 import nano.repository.BarkMessageRepository;
-import nano.repository.BarkTargetRepository;
 import nano.repository.NanoMetaRepository;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -23,7 +21,6 @@ public class BarkService {
 
     private final BarkMessageRepository barkMessageRepository;
     private final NanoMetaRepository nanoMetaRepository;
-    private final BarkTargetRepository barkTargetRepository;
 
     @PostConstruct
     public void init() {
