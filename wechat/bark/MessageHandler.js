@@ -22,7 +22,7 @@ export default class MessageHandler {
         const r = await applyAckMessage(id, content)
         if (r) {
             const m = JSON.parse(r)
-            bot.sendMsg(`✅Message [${id}] acked at ${getCSTString(m.ackTime)}`, message.FromUserName)
+            bot.sendMsg(`✅Message [${id}] acked at ${getCSTString(new Date(m.ackTime))}`, message.FromUserName)
         } else {
             bot.sendMsg(`❌Message [${id}] not found`, message.FromUserName)
         }
