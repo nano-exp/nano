@@ -18,8 +18,13 @@ export default class MessageHandler {
         const content = message.Content
         const g = ACK_RE.exec(content)
         const id = g[1]
-        await applyAckMessage(id, content)
-        bot.sendMsg(`✅Message ${id} acked`, message.FromUserName)
+        const r = await applyAckMessage(id, content)
+        if (r) {
+            const m = JSON.parse(r)
+            bot.sendMsg(`✅Message ${id} acked at ${m.ackTime}`, message.FromUserName)
+        } else {
+            bot.sendMsg(`❌Message ${id} not found`, message.FromUserName)
+        }
     }
 
     async handleText(message) {
