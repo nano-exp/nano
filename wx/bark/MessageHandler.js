@@ -6,6 +6,19 @@ const ACK_RE = /.*ack (\d+)$/i
 const ACK_ALL_RE = /.*ack *all$/i
 const AT_RE = /@Nano *$/
 
+/**
+ *
+ * @param cases {{re:RegExp,fn:Function}[]}
+ * @param s {string}
+ */
+function when(cases = [], s) {
+    for (const c of cases) {
+        if (c.re.test(s)) {
+            c.fn(s)
+        }
+    }
+}
+
 export default class MessageHandler {
     constructor(bot) {
         this.bot = bot
@@ -41,14 +54,20 @@ export default class MessageHandler {
 
     async handleText(message) {
         const content = message.Content
-        if (ACK_RE.test(content)) {
-            await this.handleAck(message)
-        } else if (ACK_ALL_RE.test(content)) {
-            await this.handleAckAll(message)
-        } else if (AT_RE.test(content)) {
-            await this.handleAt(message)
-        } else {
-            // ignore
+        const dispatches = [{
+            when: () => ACK_RE.test(content),
+            handle: () => this.handleAck(message)
+        }, {
+            when: () => ACK_ALL_RE.test(content),
+            handle: () => this.handleAckAll(message)
+        }, {
+            when: () => AT_RE.test(content),
+            handle: () => this.handleAt(message)
+        }]
+        for (const dispatch of dispatches) {
+            if (dispatch.when()) {
+                await dispatch.handle()
+            }
         }
     }
 
