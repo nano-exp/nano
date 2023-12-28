@@ -34,8 +34,9 @@ export default class MessageHandler {
             await this.handleAck(message)
         } else if (AT_RE.test(content)) {
             await this.handleAt(message)
+        } else {
+            // ignore
         }
-
     }
 
     async handle(message) {

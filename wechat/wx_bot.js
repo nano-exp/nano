@@ -2,7 +2,7 @@ import WeChat from 'wechat4u'
 import fs from 'fs/promises'
 import { WX_DATA_FILENAME } from './global.js'
 
-// see https://github.com/nodeWechat/wechat4u/blob/master/run-core.js
+// see https://github.com/nodeWechat/wechat4u
 
 async function createWxBot() {
     try {
