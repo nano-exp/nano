@@ -7,8 +7,4 @@ pluginManagement {
 
 rootProject.name = "nano"
 
-include(
-        "service",
-        "www",
-        "wechat"
-)
+include("service", "www", "wx")

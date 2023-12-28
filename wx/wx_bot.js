@@ -14,7 +14,7 @@ async function createWxBot() {
     }
 }
 
-export async function getWxBot() {
+export async function newWxBot() {
     const bot = await createWxBot()
 
     bot.on('uuid', (uuid) => {

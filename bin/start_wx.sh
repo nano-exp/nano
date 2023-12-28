@@ -7,4 +7,4 @@ if [ -f .env ]; then
     . .env
 fi
 
-exec node wechat/main.js "$@"
+exec node wx/main.js "$@"
