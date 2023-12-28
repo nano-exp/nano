@@ -27,11 +27,12 @@ public class BarkService {
         this.nanoMetaRepository.assertNanoMetaTableExists();
     }
 
-    public void onBarkCall(@NotNull String payload) {
+    public void onBarkCall(@NotNull String payload, @Nullable String domain) {
         log.info("bark body: %s".formatted(payload));
         var message = new BarkMessage();
         message.setPayload(payload);
         message.setCreateTime(Instant.now().toString());
+        message.setComment(domain != null ? domain : "");
         var id = this.barkMessageRepository.create(message);
         if (id != null) {
             message.setId(id);
