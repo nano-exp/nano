@@ -20,7 +20,7 @@ export default class NoticeSender {
         const contact = await bot.getContact()
         const contactMap = new Map
         for (const it of contact.MemberList) {
-            contactMap.set(it.NickName, it)
+            contactMap.set(it.RemarkName || it.NickName, it)
         }
         return contactMap
     }
