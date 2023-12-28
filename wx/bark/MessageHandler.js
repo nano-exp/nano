@@ -48,7 +48,7 @@ export default class MessageHandler {
         const content = message.Content
         const r = await applyAckAllMessage(content)
         if (r) {
-            bot.sendMsg(`✅Ack messages done`, message.FromUserName)
+            bot.sendMsg(`✅Ack all messages done`, message.FromUserName)
         }
     }
 
