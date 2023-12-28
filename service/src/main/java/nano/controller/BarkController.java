@@ -44,6 +44,12 @@ public class BarkController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping(path = "/api/bark/ack-all-message")
+    public ResponseEntity<?> ackMessage(@RequestBody(required = false) String body) {
+        var result = this.barkService.ackAllMessage(body != null ? body : "");
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping(path = "/api/bark/message/{id}")
     public ResponseEntity<?> getMessage(@PathVariable("id") Integer id) {
         var message = this.barkService.getMessage(id);

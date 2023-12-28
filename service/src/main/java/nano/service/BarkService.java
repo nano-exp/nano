@@ -12,7 +12,9 @@ import org.jetbrains.annotations.Nullable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -57,6 +59,19 @@ public class BarkService {
         return message;
     }
 
+    public String ackAllMessage(@NotNull String comment) {
+        var notAckedList = this.barkMessageRepository.getNotAckedList();
+        var now = Instant.now().toString();
+        var ackedIdList = new ArrayList<Integer>();
+        for (var it : notAckedList) {
+            this.barkMessageRepository.updateAckTime(it.getId(), now, comment);
+            ackedIdList.add(it.getId());
+        }
+        return ackedIdList.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+    }
+
     public List<BarkNotice> getPendingNoticeList() {
         var messageList = this.getNotAckMessageList();
         var barkWxRoom = this.nanoMetaRepository.getValue("bark_wx_room");
@@ -67,4 +82,6 @@ public class BarkService {
             return ni;
         }).toList();
     }
+
+
 }

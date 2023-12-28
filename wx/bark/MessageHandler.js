@@ -1,7 +1,9 @@
-import applyAckMessage from '../apis/applyAckMessage.js'
 import { getCSTString } from '../utils.js'
+import applyAckMessage from '../apis/applyAckMessage.js'
+import applyAckAllMessage from '../apis/applyAckAllMessage.js'
 
 const ACK_RE = /.*ack (\d+)$/i
+const ACK_ALL_RE = /.*ack *all$/i
 const AT_RE = /@Nano *$/
 
 export default class MessageHandler {
@@ -28,10 +30,21 @@ export default class MessageHandler {
         }
     }
 
+    async handleAckAll(message) {
+        const bot = this.bot
+        const content = message.Content
+        const r = await applyAckAllMessage(content)
+        if (r) {
+            bot.sendMsg(`✅Ack messages done`, message.FromUserName)
+        }
+    }
+
     async handleText(message) {
         const content = message.Content
         if (ACK_RE.test(content)) {
             await this.handleAck(message)
+        } else if (ACK_ALL_RE.test(content)) {
+            await this.handleAckAll(message)
         } else if (AT_RE.test(content)) {
             await this.handleAt(message)
         } else {
