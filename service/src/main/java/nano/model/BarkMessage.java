@@ -8,5 +8,6 @@ public class BarkMessage {
     private String payload;
     private String ackTime;
     private String createTime;
+    private String domain;
     private String comment;
 }

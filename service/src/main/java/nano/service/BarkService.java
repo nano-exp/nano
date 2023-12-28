@@ -32,7 +32,7 @@ public class BarkService {
         var message = new BarkMessage();
         message.setPayload(payload);
         message.setCreateTime(Instant.now().toString());
-        message.setComment(domain != null ? domain : "");
+        message.setComment(domain);
         var id = this.barkMessageRepository.create(message);
         if (id != null) {
             message.setId(id);

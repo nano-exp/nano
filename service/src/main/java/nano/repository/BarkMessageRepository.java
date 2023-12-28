@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.CollectionUtils;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -23,8 +22,8 @@ public class BarkMessageRepository {
 
     public synchronized Integer create(@NotNull BarkMessage message) {
         var insertSql = """
-                INSERT INTO bark_message (payload, ack_time, create_time, comment)
-                VALUES (:payload, :ackTime, :createTime, :comment);
+                INSERT INTO bark_message (payload, ack_time, create_time, domain, comment)
+                VALUES (:payload, :ackTime, :createTime, :domain, :comment);
                 """;
         var source = new BeanPropertySqlParameterSource(message);
         this.jdbcTemplate.update(insertSql, source);
@@ -34,7 +33,7 @@ public class BarkMessageRepository {
 
     public @NotNull List<BarkMessage> getNotAckedList() {
         var sql = """
-                SELECT id, payload, ack_time, create_time, comment
+                SELECT id, payload, ack_time, create_time, domain, comment
                 FROM bark_message
                 WHERE ack_time IS NULL;
                 """;
@@ -44,7 +43,7 @@ public class BarkMessageRepository {
 
     public @Nullable BarkMessage getById(Integer id) {
         var sql = """
-                SELECT id, payload, ack_time, create_time, comment
+                SELECT id, payload, ack_time, create_time, domain, comment
                 FROM bark_message
                 WHERE id = :id;
                 """;

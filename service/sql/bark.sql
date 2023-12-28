@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS bark_message
     payload     TEXT,
     ack_time    TEXT DEFAULT NULL,
     create_time TEXT,
+    domain      TEXT,
     comment     TEXT DEFAULT ''
 );
