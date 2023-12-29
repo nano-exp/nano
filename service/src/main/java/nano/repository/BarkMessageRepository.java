@@ -4,31 +4,32 @@ import lombok.RequiredArgsConstructor;
 import nano.model.BarkMessage;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.SingleColumnRowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.CollectionUtils;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
 public class BarkMessageRepository {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final JdbcClient jdbcClient;
+
+    private Integer selectLastInsertRowId() {
+        return this.jdbcClient.sql("SELECT LAST_INSERT_ROWID();")
+                .query(Integer.class)
+                .single();
+    }
 
     public synchronized Integer create(@NotNull BarkMessage message) {
-        var insertSql = """
+        var sql = """
                 INSERT INTO bark_message (payload, ack_time, create_time, domain, comment)
                 VALUES (:payload, :ackTime, :createTime, :domain, :comment);
                 """;
-        var source = new BeanPropertySqlParameterSource(message);
-        this.jdbcTemplate.update(insertSql, source);
-        var selectIdSql = "SELECT LAST_INSERT_ROWID();";
-        return this.jdbcTemplate.queryForObject(selectIdSql, Map.of(), new SingleColumnRowMapper<>());
+        int affectedRowCount = this.jdbcClient.sql(sql)
+                .paramSource(message)
+                .update();
+        return affectedRowCount == 1 ? this.selectLastInsertRowId() : null;
     }
 
     public @NotNull List<BarkMessage> getNotAckedList() {
@@ -37,8 +38,9 @@ public class BarkMessageRepository {
                 FROM bark_message
                 WHERE ack_time IS NULL;
                 """;
-        var rowMapper = new BeanPropertyRowMapper<>(BarkMessage.class);
-        return this.jdbcTemplate.query(sql, rowMapper);
+        return this.jdbcClient.sql(sql)
+                .query(BarkMessage.class)
+                .list();
     }
 
     public @Nullable BarkMessage getById(Integer id) {
@@ -47,12 +49,12 @@ public class BarkMessageRepository {
                 FROM bark_message
                 WHERE id = :id;
                 """;
-        var rowMapper = new BeanPropertyRowMapper<>(BarkMessage.class);
-        var messageList = this.jdbcTemplate.query(sql, Map.of("id", id), rowMapper);
-        if (CollectionUtils.isEmpty(messageList)) {
-            return null;
-        }
-        return messageList.get(0);
+        return this.jdbcClient
+                .sql(sql)
+                .param("id", id)
+                .query(BarkMessage.class)
+                .optional()
+                .orElse(null);
     }
 
     public void updateAckTime(@NotNull Integer id, @NotNull String time, @NotNull String comment) {
@@ -62,7 +64,10 @@ public class BarkMessageRepository {
                     comment  = :comment
                 WHERE id = :id;
                 """;
-        var paramMap = Map.of("id", id, "time", time, "comment", comment);
-        this.jdbcTemplate.update(sql, paramMap);
+        this.jdbcClient.sql(sql)
+                .param("id", id)
+                .param("time", time)
+                .param("comment", comment)
+                .update();
     }
 }

@@ -3,9 +3,7 @@ package nano.repository;
 import lombok.RequiredArgsConstructor;
 import nano.model.NanoMeta;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.SingleColumnRowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.Assert;
 
@@ -18,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NanoMetaRepository {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final JdbcClient jdbcClient;
 
     public void assertNanoMetaTableExists() {
         var sql = """
@@ -26,8 +24,9 @@ public class NanoMetaRepository {
                 FROM sqlite_master
                 WHERE name = 'nano_meta';
                 """;
-        var rowMapper = new SingleColumnRowMapper<Integer>();
-        var count = this.jdbcTemplate.queryForObject(sql, Map.of(), rowMapper);
+        var count = this.jdbcClient.sql(sql)
+                .query(Integer.class)
+                .single();
         Assert.state(Objects.equals(count, 1), "table [nano_meta] is not exists");
     }
 
@@ -36,8 +35,9 @@ public class NanoMetaRepository {
                 SELECT id, name, value, description
                 FROM nano_meta;
                 """;
-        var rowMapper = new BeanPropertyRowMapper<>(NanoMeta.class);
-        return this.jdbcTemplate.query(sql, rowMapper);
+        return this.jdbcClient.sql(sql)
+                .query(NanoMeta.class)
+                .list();
     }
 
     public Map<String, String> getAllMap() {

@@ -36,9 +36,7 @@ public class BarkService {
         message.setCreateTime(Instant.now().toString());
         message.setDomain(domain);
         var id = this.barkMessageRepository.create(message);
-        if (id != null) {
-            message.setId(id);
-        }
+        message.setId(id);
     }
 
     public @NotNull List<BarkMessage> getNotAckMessageList() {

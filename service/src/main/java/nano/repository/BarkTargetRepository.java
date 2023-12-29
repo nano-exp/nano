@@ -2,8 +2,7 @@ package nano.repository;
 
 import lombok.RequiredArgsConstructor;
 import nano.model.BarkTarget;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BarkTargetRepository {
 
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final JdbcClient jdbcClient;
 
     public List<BarkTarget> getAll() {
         var sql = """
@@ -20,7 +19,8 @@ public class BarkTargetRepository {
                 FROM bark_target
                 WHERE name IS NOT NULL AND url IS NOT NULL;
                 """;
-        var rowMapper = new BeanPropertyRowMapper<>(BarkTarget.class);
-        return this.jdbcTemplate.query(sql, rowMapper);
+        return this.jdbcClient.sql(sql)
+                .query(BarkTarget.class)
+                .list();
     }
 }
