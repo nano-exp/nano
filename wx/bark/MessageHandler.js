@@ -2,8 +2,8 @@ import { getCSTString } from '../utils.js'
 import applyAckMessage from '../apis/applyAckMessage.js'
 import applyAckAllMessage from '../apis/applyAckAllMessage.js'
 
-const ACK_RE = /.*ack (\d+)$/i
-const ACK_ALL_RE = /.*ack *all$/i
+const ACK_RE = /.*\/ack (\d+)$/i
+const ACK_ALL_RE = /.*\/ack *all$/i
 const AT_RE = /@Nano *$/
 
 /**
