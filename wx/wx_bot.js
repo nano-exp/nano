@@ -1,5 +1,5 @@
+import fs from 'node:fs/promises'
 import WeChat from 'wechat4u'
-import fs from 'fs/promises'
 
 // see https://github.com/nodeWechat/wechat4u
 
