@@ -2,8 +2,9 @@ import { newWxBot } from './wx_bot.js'
 import MessageHandler from './bark/MessageHandler.js'
 import NoticeSender from './bark/NoticeSender.js'
 import { sleep } from './utils.js'
+import { WX_DATA_FILENAME } from './global.js'
 
-const bot = await newWxBot()
+const bot = await newWxBot(WX_DATA_FILENAME)
 
 const mh = new MessageHandler(bot)
 bot.on('message', async (msg) => {

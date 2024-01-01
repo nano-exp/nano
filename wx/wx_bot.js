@@ -1,21 +1,20 @@
 import WeChat from 'wechat4u'
 import fs from 'fs/promises'
-import { WX_DATA_FILENAME } from './global.js'
 
 // see https://github.com/nodeWechat/wechat4u
 
-async function createWxBot() {
+async function createWxBot(dataStorePath) {
     try {
-        console.info('try load bot data:', WX_DATA_FILENAME)
-        const botData = JSON.parse(await fs.readFile(WX_DATA_FILENAME, 'utf-8'))
+        console.info('try load bot data:', dataStorePath)
+        const botData = JSON.parse(await fs.readFile(dataStorePath, 'utf-8'))
         return new WeChat(botData)
     } catch (err) {
         return new WeChat()
     }
 }
 
-export async function newWxBot() {
-    const bot = await createWxBot()
+export async function newWxBot(dataStorePath) {
+    const bot = await createWxBot(dataStorePath)
 
     bot.on('uuid', (uuid) => {
         console.info('QR Code', 'https://login.weixin.qq.com/qrcode/' + uuid)
@@ -23,12 +22,12 @@ export async function newWxBot() {
 
     bot.on('login', async () => {
         console.info('login done')
-        await fs.writeFile(WX_DATA_FILENAME, JSON.stringify(bot.botData))
+        await fs.writeFile(dataStorePath, JSON.stringify(bot.botData))
     })
 
     bot.on('logout', async () => {
         console.info('logout done')
-        await fs.unlink(WX_DATA_FILENAME)
+        await fs.unlink(dataStorePath)
     })
 
     bot.on('error', (err) => {
