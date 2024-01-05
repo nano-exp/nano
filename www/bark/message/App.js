@@ -16,7 +16,7 @@ const AppClassName = css`
 export default {
     template: `
       <div :class="AppClassName">
-        <div>Ack Message</div>
+        <div>Bark Message</div>
         <div class="data">{{ state.message }}</div>
         <div class="btn-ack">
           <Button v-if="showAckButton" :on-click="fetchAckMessage">
