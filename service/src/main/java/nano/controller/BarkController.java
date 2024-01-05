@@ -22,14 +22,15 @@ public class BarkController {
     @RequestMapping(path = {"/api/bark/call", "/api/bark/call/{domain}"})
     public ResponseEntity<?> barkCall(@PathVariable(name = "domain", required = false) String domain,
                                       @RequestParam(required = false) Map<String, String> search,
-                                      @RequestBody(required = false) String payload) {
+                                      @RequestBody(required = false) String body) {
         var getMessage = (Supplier<String>) () -> {
-            if (!ObjectUtils.isEmpty(payload)) {
-                return payload;
+            if (!ObjectUtils.isEmpty(body)) {
+                return Json.stringify(Map.of("message", body));
             } else if (!ObjectUtils.isEmpty(search)) {
                 return Json.stringify(search);
             } else {
-                return "[Bark from %s]".formatted(CurrentRequest.getCurrentRequestAddress());
+                var fallback = "[Bark from %s]".formatted(CurrentRequest.getCurrentRequestAddress());
+                return Json.stringify(Map.of("message", fallback));
             }
         };
         var message = getMessage.get();
