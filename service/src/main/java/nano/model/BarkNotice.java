@@ -21,7 +21,7 @@ public class BarkNotice {
             var template = "⚠️Message: [%s]\n%s\n%s";
             var parsed = Json.parseMap(payload);
             var id = message.getId();
-            var s = (String) parsed.getOrDefault("message", payload);
+            var s = (String) parsed.getOrDefault("title", payload);
             var link = URI.create(Env.NANO_HOST).resolve("/s/bark/m-%s".formatted(id));
             return template.formatted(id, s, link);
         } catch (Exception ex) {
