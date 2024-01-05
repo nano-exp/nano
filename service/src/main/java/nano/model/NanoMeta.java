@@ -6,10 +6,7 @@ import lombok.Data;
 public class NanoMeta {
 
     private Integer id;
-
     private String name;
-
     private String value;
-
     private String description;
 }

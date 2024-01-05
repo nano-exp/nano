@@ -21,10 +21,4 @@ public class NanoController {
         return ResponseEntity.ok("hi");
     }
 
-    @GetMapping("/s/bark/m-{id}")
-    public ResponseEntity<?> barkMessage(@PathVariable("id") Integer id) {
-        return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT)
-                .location(URI.create("/bark/message/index.html?id=%s".formatted(id)))
-                .build();
-    }
 }
