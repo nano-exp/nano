@@ -22,7 +22,7 @@ public class BarkNotice {
             var parsed = Json.parseMap(payload);
             var id = message.getId();
             var s = (String) parsed.getOrDefault("message", payload);
-            var link = new URI(Env.NANO_HOST).resolve("/bark/ack-message/index.html?id=%s".formatted(id));
+            var link = URI.create(Env.NANO_HOST).resolve("/s/bark/m-%s".formatted(id));
             return template.formatted(id, s, link);
         } catch (Exception ex) {
             return payload;
