@@ -25,7 +25,7 @@ public class BarkController {
                                       @RequestBody(required = false) String body) {
         var getMessage = (Supplier<String>) () -> {
             if (!ObjectUtils.isEmpty(body)) {
-                return Json.stringify(Map.of("message", body));
+                return body;
             } else if (!ObjectUtils.isEmpty(search)) {
                 return Json.stringify(search);
             } else {
