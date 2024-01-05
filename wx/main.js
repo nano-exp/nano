@@ -15,7 +15,7 @@ bot.on('login', async () => {
     const noticeSender = new NoticeSender(bot)
     while (bot.state === bot.CONF.STATE.login) {
         await noticeSender.sendMessage()
-        await sleep(5000)
+        await sleep(7000)
     }
 })
 

@@ -18,7 +18,13 @@ public class BarkNotice {
     public static @NotNull String parseContent(@NotNull BarkMessage message) {
         var payload = message.getPayload();
         try {
-            var template = "⚠️Message: [%s]\n%s\n%s";
+            var template = """
+                    ⚠️Message: [%s]
+                    
+                    %s
+                    
+                    %s
+                    """;
             var parsed = Json.parseMap(payload);
             var id = message.getId();
             var s = (String) parsed.getOrDefault("title", payload);
