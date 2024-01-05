@@ -25,10 +25,6 @@ export default class NoticeSender {
         return contactMap
     }
 
-    buildWxMessage(notice) {
-        return `⚠️Message: [${notice.message.id}]\n${notice.message.payload}`
-    }
-
     async sendMessage() {
         const bot = this.bot
         const noticeList = await this.getPendingNotice()
@@ -39,7 +35,7 @@ export default class NoticeSender {
         for (const it of noticeList) {
             const c = contactMap.get(it.recipient)
             if (c) {
-                bot.sendMsg(this.buildWxMessage(it), c.UserName)
+                bot.sendMsg(it.content, c.UserName)
             }
         }
     }

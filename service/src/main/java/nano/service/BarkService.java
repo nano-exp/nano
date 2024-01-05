@@ -75,8 +75,9 @@ public class BarkService {
         var barkWxRoom = this.nanoMetaRepository.getValue("bark_wx_room");
         return messageList.stream().map((it) -> {
             var ni = new BarkNotice();
-            ni.setMessage(it);
+            ni.setContent(BarkNotice.parseContent(it));
             ni.setRecipient(barkWxRoom);
+            ni.setMessage(it);
             return ni;
         }).toList();
     }
