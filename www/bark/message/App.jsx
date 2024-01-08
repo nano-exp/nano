@@ -1,8 +1,9 @@
-import { css, onMounted, reactive, computed } from '../../deps/deps.js'
-import Button from '../../common/Button.js'
+import { onMounted, reactive, computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { css } from '@emotion/css'
+import Button from '../../common/Button.jsx'
 import getMessage from '../apis/getMessage.js'
 import applyAckMessage from '../apis/applyAckMessage.js'
-
 
 const AppClassName = css`
     .data {
@@ -14,22 +15,13 @@ const AppClassName = css`
     }
 `
 export default {
-    template: `
-      <div :class="AppClassName">
-        <div>Bark Message</div>
-        <div class="data">{{ state.message }}</div>
-        <div class="btn-ack">
-          <Button v-if="showAckButton" :on-click="fetchAckMessage">
-            Ack Message
-          </Button>
-        </div>
-      </div>
-    `,
     components: { Button, },
     setup(props) {
+        const route = useRoute()
+
         const state = reactive({
             message: '',
-            id: new URLSearchParams(location.search).get('id'),
+            id: route.query.id,
         })
 
         onMounted(async () => {
@@ -47,11 +39,19 @@ export default {
             return state.id && state.message && !state.message.ackTime
         })
 
-        return {
-            state,
-            fetchAckMessage,
-            AppClassName,
-            showAckButton,
+        return () => {
+            const m = state.message ? JSON.stringify(state.message, null, 2) : ''
+            return (
+                <div class={AppClassName}>
+                    <div>Bark Message</div>
+                    <div class="data">{m}</div>
+                    {showAckButton.value && <div class="btn-ack">
+                        <Button onClick={fetchAckMessage}>
+                            Ack Message
+                        </Button>
+                    </div>}
+                </div>
+            )
         }
     }
 }

@@ -1,4 +1,5 @@
-import { css, ref } from '../deps/deps.js'
+import { ref } from 'vue'
+import { css } from '@emotion/css'
 
 const ButtonClassName = css`
     font-size: 1rem;
@@ -6,15 +7,10 @@ const ButtonClassName = css`
     padding: 0 .5rem;
 `
 export default {
-    template: `
-      <button :class="ButtonClassName" @click="onClickButton" :disabled="loading">
-        <slot></slot>
-      </button>
-    `,
     props: {
         onClick: Function,
     },
-    setup(props) {
+    setup(props, { slots }) {
         const loading = ref(false)
 
         async function onClickButton() {
@@ -26,10 +22,14 @@ export default {
             }
         }
 
-        return {
-            onClickButton,
-            ButtonClassName,
-            loading,
+        console.log('slots', slots)
+
+        return () => {
+            return (
+                <button class={ButtonClassName} onClick={onClickButton} disabled={loading.value}>
+                    {slots.default()}
+                </button>
+            )
         }
     },
 }
