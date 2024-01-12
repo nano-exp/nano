@@ -3,6 +3,7 @@ package nano.service;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nano.common.Json;
 import nano.model.BarkMessage;
 import nano.model.BarkNotice;
 import nano.repository.BarkMessageRepository;
@@ -31,12 +32,17 @@ public class BarkService {
 
     public void onBarkCall(@NotNull String payload, @Nullable String domain) {
         log.info("bark body: %s".formatted(payload));
-        var message = new BarkMessage();
-        message.setPayload(payload);
-        message.setCreateTime(Instant.now().toString());
-        message.setDomain(domain);
-        var id = this.barkMessageRepository.create(message);
-        message.setId(id);
+        var parsed = Json.parseMap(payload);
+        if ("resolved".equals(parsed.get("status"))) {
+            log.info("skip resolved message");
+        } else {
+            var message = new BarkMessage();
+            message.setPayload(payload);
+            message.setCreateTime(Instant.now().toString());
+            message.setDomain(domain);
+            var id = this.barkMessageRepository.create(message);
+            message.setId(id);
+        }
     }
 
     public @NotNull List<BarkMessage> getNotAckMessageList() {
