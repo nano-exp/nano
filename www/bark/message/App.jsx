@@ -76,17 +76,17 @@ export default defineComponent({
             ackLoading,
         }
     },
-    render() {
+    render(context) {
         const {
             showAckButton,
             fetchAckMessage,
             message,
             messagePayloadJson,
             ackLoading,
-        } = this
+        } = context
 
-        const formattedCreateTime = getCSTString(new Date(message.createTime))
-        const formattedAckTime = message.ackTime ? getCSTString(new Date(message.ackTime)) : 'Not acked'
+        const formattedCreateTime = getCSTString(new Date(message?.createTime))
+        const formattedAckTime = message?.ackTime ? getCSTString(new Date(message?.ackTime)) : 'Not acked'
 
         return (
             <div class={AppClassName}>
