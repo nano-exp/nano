@@ -19,7 +19,7 @@
     "vue-router": "^4.3.1"
   },
   "engines": {
-    "node": ">20"
+    "node": ">=20"
   },
   "devDependencies": {
     "@vitejs/plugin-vue-jsx": "^3.1.0",
