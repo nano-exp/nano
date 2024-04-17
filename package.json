@@ -9,17 +9,17 @@
     "build": "vite build --config www/vite.config.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "cbdyzj",
   "license": "ISC",
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
+    "@emotion/css": "^11.11.2",
     "@vitejs/plugin-vue-jsx": "^3.1.0",
+    "naive-ui": "^2.38.1",
     "pinia": "^2.1.7",
     "vite": "^5.2.9",
-    "@emotion/css": "^11.11.2",
-    "naive-ui": "^2.38.1",
     "vue": "^3.4.23",
     "vue-router": "^4.3.1"
   }
