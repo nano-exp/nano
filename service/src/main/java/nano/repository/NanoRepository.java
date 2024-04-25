@@ -1,7 +1,8 @@
 package nano.repository;
 
 import lombok.RequiredArgsConstructor;
-import nano.model.BarkTarget;
+import nano.model.NanoMeta;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -9,18 +10,17 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class BarkTargetRepository {
+public class NanoRepository {
 
     private final JdbcClient jdbcClient;
 
-    public List<BarkTarget> getAll() {
+    public @NotNull List<NanoMeta> getNanoMeta() {
         var sql = """
-                SELECT id, name, url, enabled
-                FROM bark_target
-                WHERE name IS NOT NULL AND url IS NOT NULL;
+                SELECT id, name, value, description
+                FROM nano_meta;
                 """;
         return this.jdbcClient.sql(sql)
-                .query(BarkTarget.class)
+                .query(NanoMeta.class)
                 .list();
     }
 }
