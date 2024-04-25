@@ -22,7 +22,7 @@ public class NanoController {
     }
 
     @ResponseBody
-    @GetMapping("/meta-data")
+    @GetMapping("/api/meta-data")
     public ResponseEntity<?> getMetaData() {
         var metaData = this.nanoService.getMetaData();
         return ResponseEntity.ok(metaData);
