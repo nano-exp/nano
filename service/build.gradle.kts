@@ -39,9 +39,12 @@ tasks {
             into("static")
         }
     }
+    bootRun {
+        workingDir = rootDir
+    }
     test {
         useJUnitPlatform()
-        jvmArgs = listOf("-Xshare:off")
         workingDir = rootDir
+        jvmArgs = listOf("-Xshare:off")
     }
 }
