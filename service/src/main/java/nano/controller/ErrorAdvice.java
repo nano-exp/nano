@@ -8,7 +8,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class ErrorAdvice {
 
     @ExceptionHandler(NoResourceFoundException.class)
-    public String on404() {
+    public String onResource404() {
         return "forward:/";
     }
 }

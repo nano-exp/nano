@@ -9,6 +9,4 @@ public class NanoApplication {
     public static void main(String[] args) {
         SpringApplication.run(NanoApplication.class, args);
     }
-
-
 }
