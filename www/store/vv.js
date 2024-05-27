@@ -6,7 +6,7 @@ export const useVvStore = defineStore('app', {
         return {
             name: 'VV表情包',
             pageIndex: 1,
-            pageSize: 10,
+            pageSize: 50,
             keyword: '',
             list: [],
             loading: false,
