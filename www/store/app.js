@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export default defineStore('app', {
+export const useAppStore = defineStore('app', {
     state() {
         return {
             name: 'Nano',

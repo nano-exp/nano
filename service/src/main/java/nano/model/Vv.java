@@ -3,9 +3,10 @@ package nano.model;
 import lombok.Data;
 
 @Data
-public class BarkTarget {
+public class Vv {
+
     private Integer id;
     private String name;
     private String url;
-    private Boolean enabled;
+    private String comment;
 }
