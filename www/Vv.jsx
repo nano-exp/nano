@@ -31,6 +31,11 @@ const ClassName = css`
             }
         }
 
+        .load-more {
+            margin-top: 8px;
+            text-align: center;
+        }
+
         .empty {
             min-height: 200px;
             display: grid;
@@ -71,16 +76,25 @@ export default defineComponent({
                 <div class="image-list">
                     <NSpin show={vvStore.loading}>
                         {vvStore.list.length > 0 ? (
-                            <NList hoverable>
-                                {vvStore.list.map((it) => (
-                                    <NListItem key={it.id}>
-                                        <div class="image-item">
-                                            <NImage width="100%" src={it.url}/>
-                                            <div class="item-title">{it.name}</div>
-                                        </div>
-                                    </NListItem>
-                                ))}
-                            </NList>
+                            <>
+                                <NList hoverable>
+                                    {vvStore.list.map((it) => (
+                                        <NListItem key={it.id}>
+                                            <div class="image-item">
+                                                <NImage width="100%" src={it.url}/>
+                                                <div class="item-title">{it.name}</div>
+                                            </div>
+                                        </NListItem>
+                                    ))}
+                                </NList>
+                                {vvStore.showLoadMore && (
+                                    <div class="load-more">
+                                        <NButton onClick={() => vvStore.onSearchVv(true)}>
+                                            显示更多
+                                        </NButton>
+                                    </div>
+                                )}
+                            </>
                         ) : (
                             <div class="empty">
                                 <NEmpty description="空" size="large"/>

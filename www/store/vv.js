@@ -6,18 +6,35 @@ export const useVvStore = defineStore('app', {
         return {
             name: 'VV表情包',
             pageIndex: 1,
-            pageSize: 50,
+            pageSize: 10,
             keyword: '',
             list: [],
             loading: false,
+            showLoadMore: true,
         }
     },
     actions: {
-        async onSearchVv() {
-            const { keyword, pageIndex, pageSize } = this
+        async onSearchVv(append = false) {
+            if (!append) {
+                this.pageIndex = 1
+            } else {
+                this.pageIndex = this.pageIndex + 1
+            }
             try {
                 this.loading = true
-                this.list = await searchVv({ keyword, pageIndex, pageSize, })
+                const l = await searchVv({
+                    keyword: this.keyword,
+                    pageIndex: this.pageIndex,
+                    pageSize: this.pageSize,
+                })
+                if (append) {
+                    if (l.length) {
+                        this.list = this.list.concat(l)
+                    }
+                } else {
+                    this.list = l
+                }
+                this.showLoadMore = l.length === this.pageSize;
             } finally {
                 this.loading = false
             }
