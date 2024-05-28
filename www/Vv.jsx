@@ -70,7 +70,7 @@ export default defineComponent({
                     <NInputGroup>
                         <NInput value={vvStore.keyword} onInput={(ev) => vvStore.keyword = ev}
                                 onKeyup={onInputKeyup}/>
-                        <NButton onClick={vvStore.onSearchVv} type="primary" ghost>搜索</NButton>
+                        <NButton onClick={() => vvStore.onSearchVv()} type="primary" ghost>搜索</NButton>
                     </NInputGroup>
                 </div>
                 <div class="image-list">
