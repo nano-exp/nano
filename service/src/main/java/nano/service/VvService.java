@@ -19,9 +19,9 @@ public class VvService {
 
     private final VvRepository vvRepository;
 
-    public List<Vv> search(@NotNull final String keyword,
-                           @NotNull final Integer pageIndex,
-                           @NotNull final Integer pageSize) {
+    public @NotNull List<@NotNull Vv> search(@NotNull final String keyword,
+                                             @NotNull final Integer pageIndex,
+                                             @NotNull final Integer pageSize) {
         var l = this.vvRepository.findVvList(keyword, pageSize, (pageIndex - 1) * pageSize);
         if (ObjectUtils.isEmpty(keyword)) {
             l = new ArrayList<>(l);
@@ -30,7 +30,7 @@ public class VvService {
         return l;
     }
 
-    public Integer count(@NotNull final String keyword) {
+    public @NotNull Integer count(@NotNull final String keyword) {
         return this.vvRepository.countVvList(keyword);
     }
 }

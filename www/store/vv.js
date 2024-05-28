@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { searchVv } from '../service/vv.js'
+import { searchVv } from '../services/vv.js'
 
 export const useVvStore = defineStore('app', {
     state() {
