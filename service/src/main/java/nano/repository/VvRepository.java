@@ -30,4 +30,16 @@ public class VvRepository {
                 .query(Vv.class)
                 .list();
     }
+
+    public @NotNull Integer countVvList(@NotNull final String keyword) {
+        var sql = """
+                SELECT COUNT(*)
+                FROM vv
+                WHERE name LIKE :like;
+                """;
+        return this.jdbcClient.sql(sql)
+                .param("like", String.join("", "%", keyword, "%"))
+                .query(Integer.class)
+                .single();
+    }
 }

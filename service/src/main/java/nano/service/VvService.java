@@ -29,4 +29,8 @@ public class VvService {
         }
         return l;
     }
+
+    public Integer count(@NotNull final String keyword) {
+        return this.vvRepository.countVvList(keyword);
+    }
 }

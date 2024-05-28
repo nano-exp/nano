@@ -1,7 +1,7 @@
 import { defineComponent, onMounted } from 'vue'
 import { NInputGroup, NInput, NButton, NList, NListItem, NImage, NSpin, NEmpty } from 'naive-ui'
 import { css } from '@emotion/css'
-import { useVvStore } from './store/vv.js'
+import { useVvStore } from '../store/vv.js'
 
 const ClassName = css`
     margin: 0 auto;
@@ -54,10 +54,9 @@ export default defineComponent({
         })
         return {
             vvStore,
-            ClassName,
         }
     },
-    render({ vvStore, ClassName }) {
+    render({ vvStore }) {
         const onInputKeyup = async (ev) => {
             if (ev.key === 'Enter') {
                 await vvStore.onSearchVv()

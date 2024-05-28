@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import { useAppStore } from './store/app.js'
+import { useAppStore } from '../store/app.js'
 
 export default defineComponent({
     setup() {

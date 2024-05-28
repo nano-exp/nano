@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import searchVv from '../apis/searchVv.js'
+import { searchVv } from '../service/vv.js'
 
 export const useVvStore = defineStore('app', {
     state() {
@@ -22,19 +22,19 @@ export const useVvStore = defineStore('app', {
             }
             try {
                 this.loading = true
-                const l = await searchVv({
+                const r = await searchVv({
                     keyword: this.keyword,
                     pageIndex: this.pageIndex,
                     pageSize: this.pageSize,
                 })
                 if (append) {
-                    if (l.length) {
-                        this.list = this.list.concat(l)
+                    if (r.list.length) {
+                        this.list = this.list.concat(r.list)
                     }
                 } else {
-                    this.list = l
+                    this.list = r.list
                 }
-                this.showLoadMore = l.length === this.pageSize;
+                this.showLoadMore = r.list.length === this.pageSize;
             } finally {
                 this.loading = false
             }

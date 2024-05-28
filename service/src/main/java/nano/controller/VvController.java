@@ -24,7 +24,10 @@ public class VvController {
     public ResponseEntity<List<Vv>> search(@RequestParam(name = "keyword", defaultValue = "") final String keyword,
                                            @RequestParam(name = "pageIndex", defaultValue = "1") final Integer pageIndex,
                                            @RequestParam(name = "pageSize", defaultValue = "10") final Integer pageSize) {
-        var l = this.vvService.search(keyword, pageIndex, pageSize);
-        return ResponseEntity.ok(l);
+        var list = this.vvService.search(keyword, pageIndex, pageSize);
+        var count = this.vvService.count(keyword);
+        return ResponseEntity.ok()
+                .header("X-Total-Count", String.valueOf(count))
+                .body(list);
     }
 }
