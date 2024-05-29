@@ -49,12 +49,11 @@ public class VvService {
         var name = filename.replaceFirst("[.][^.]+$", "");
         var count = this.count(name);
         if (count == 0) {
-            var objectKey = "vv/%s".formatted(filename);
+            var objectKey = "vv/" + filename;
             this.r2Service.putObject(resource, objectKey, contentType);
-            var url = "%s%s".formatted(Env.CDN_R2_HOST, objectKey);
             var vv = new Vv();
             vv.setName(name);
-            vv.setUrl(url);
+            vv.setUrl("/vv/" + filename);
             this.vvRepository.createVv(vv);
         }
     }

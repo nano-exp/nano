@@ -1,7 +1,8 @@
-import { computed, defineComponent, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
+import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
 import { css } from '@emotion/css'
-import { useAdminVv } from '../store/adminVv.js'
-import { NButton, NDataTable, NPagination, NSpin } from 'naive-ui'
+import { useAdminVvStore } from '../../store/adminVv.js'
+import { NButton, NDataTable, NPagination, NSpin, useModal } from 'naive-ui'
+import NewModal from './NewModal.jsx'
 
 const ClassName = css`
     margin: 0 auto;
@@ -31,7 +32,11 @@ const ClassName = css`
 
 export default defineComponent({
     setup() {
-        const adminVvStore = useAdminVv()
+        const adminVvStore = useAdminVvStore()
+
+        function onClickNew() {
+            adminVvStore.showNewModal = true
+        }
 
         onMounted(async () => {
             adminVvStore.resurrectToken()
@@ -64,16 +69,17 @@ export default defineComponent({
 
         return {
             adminVvStore,
+            onClickNew,
             dataTableColumns,
             dataTablePagination,
         }
     },
-    render({ adminVvStore, dataTableColumns, dataTablePagination }) {
+    render({ adminVvStore, onClickNew, dataTableColumns, dataTablePagination }) {
         return (
             <div class={ClassName}>
                 <div class="title">{adminVvStore.name}</div>
                 <div class="table-toolbar">
-                    <NButton type="primary">New</NButton>
+                    <NButton onClick={onClickNew} type="primary">New</NButton>
                 </div>
                 <div class="data-table">
                     <NSpin show={adminVvStore.loading}>
@@ -84,6 +90,7 @@ export default defineComponent({
                         <NPagination {...dataTablePagination}/>
                     </NSpin>
                 </div>
+                <NewModal/>
             </div>
         )
     }

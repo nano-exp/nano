@@ -10,3 +10,17 @@ export async function searchVv({ keyword, pageIndex, pageSize }) {
         totalCount: parseInt(totalCount),
     }
 }
+
+
+export async function createVv({ file, filename, token }) {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('filename', filename)
+    const response = await fetch('/api/vv/create', {
+        method: 'POST',
+        headers: {
+            'X-Token': token,
+        },
+        body: form,
+    })
+}
