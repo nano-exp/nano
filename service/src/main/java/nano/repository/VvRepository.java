@@ -21,7 +21,8 @@ public class VvRepository {
                 SELECT id, name, url, comment
                 FROM vv
                 WHERE name LIKE :like
-                LIMIT :limit OFFSET :offset;
+                LIMIT :limit OFFSET :offset
+                ORDER BY id DESC;
                 """;
         return this.jdbcClient.sql(sql)
                 .param("like", String.join("", "%", keyword, "%"))
