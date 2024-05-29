@@ -39,9 +39,9 @@ export const useAdminVvStore = defineStore('app', {
         },
         createGui() {
             const gui = new GUI()
-            gui.add(this, 'token').onChange((ev) => {
-                this.saveToken(ev)
-            })
+            gui.add(this, 'token')
+                .onChange((ev) => this.saveToken(ev))
+            gui.close()
             this.gui = gui
         },
         destroyGui() {
