@@ -46,7 +46,7 @@ export const useAdminVv = defineStore('app', {
             try {
                 this.loading = true
                 const { list, totalCount } = await searchVv({ keyword, pageIndex, pageSize })
-                list.sort((a, b) => a.id - b.id)
+                list.sort((a, b) => b.id - a.id)
                 this.list = list
                 this.totalCount = totalCount
             } finally {
