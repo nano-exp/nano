@@ -108,7 +108,9 @@ export default defineComponent({
                 <div class="title">{adminVvStore.name}</div>
                 <div class="search-form">
                     <NInputGroup>
-                        <NInput value={adminVvStore.keyword} onInput={(ev) => adminVvStore.keyword = ev}
+                        <NInput value={adminVvStore.keyword}
+                                clearable
+                                onInput={(ev) => adminVvStore.keyword = ev}
                                 onKeyup={onInputKeyup}/>
                         <NButton onClick={() => adminVvStore.changePage(1)} type="primary" ghost>搜索</NButton>
                     </NInputGroup>
