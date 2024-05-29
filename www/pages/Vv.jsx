@@ -52,16 +52,19 @@ export default defineComponent({
         onMounted(async () => {
             await vvStore.onSearchVv()
         })
-        return {
-            vvStore,
-        }
-    },
-    render({ vvStore }) {
-        const onInputKeyup = async (ev) => {
+
+        async function onInputKeyup(ev) {
             if (ev.key === 'Enter') {
                 await vvStore.onSearchVv()
             }
         }
+
+        return {
+            vvStore,
+            onInputKeyup,
+        }
+    },
+    render({ vvStore, onInputKeyup }) {
         return (
             <div class={ClassName}>
                 <div class="title">{vvStore.name}</div>

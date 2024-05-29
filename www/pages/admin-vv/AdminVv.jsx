@@ -1,7 +1,7 @@
-import { computed, defineComponent, h, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
+import { computed, defineComponent, onBeforeUnmount, onMounted } from 'vue'
 import { css } from '@emotion/css'
 import { useAdminVvStore } from '../../store/adminVv.js'
-import { NButton, NDataTable, NPagination, NSpin, useModal } from 'naive-ui'
+import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover, NSpin } from 'naive-ui'
 import NewModal from './NewModal.jsx'
 
 const ClassName = css`
@@ -13,6 +13,10 @@ const ClassName = css`
 
     .title {
         font-size: 20px;
+    }
+
+    .search-form {
+        margin-top: 1rem;
     }
 
     .table-toolbar {
@@ -51,7 +55,24 @@ export default defineComponent({
         const dataTableColumns = [
             { key: 'id', title: 'ID', },
             { key: 'name', title: 'Name', },
-            { key: 'url', title: 'URL', },
+            {
+                key: 'url',
+                title: 'URL',
+                render: (item) => {
+                    return (
+                        <NPopover trigger="hover">
+                            {{
+                                trigger: () => (
+                                    <span>{item.url}</span>
+                                ),
+                                default: () => (
+                                    <NImage width="150px" src={item.url} previewDisabled/>
+                                ),
+                            }}
+                        </NPopover>
+                    )
+                }
+            },
         ]
 
         const dataTablePagination = computed(() => {
@@ -67,17 +88,31 @@ export default defineComponent({
             }
         })
 
+        async function onInputKeyup(ev) {
+            if (ev.key === 'Enter') {
+                await adminVvStore.changePage(1)
+            }
+        }
+
         return {
             adminVvStore,
             onClickNew,
             dataTableColumns,
             dataTablePagination,
+            onInputKeyup,
         }
     },
-    render({ adminVvStore, onClickNew, dataTableColumns, dataTablePagination }) {
+    render({ adminVvStore, onClickNew, dataTableColumns, dataTablePagination, onInputKeyup, }) {
         return (
             <div class={ClassName}>
                 <div class="title">{adminVvStore.name}</div>
+                <div class="search-form">
+                    <NInputGroup>
+                        <NInput value={adminVvStore.keyword} onInput={(ev) => adminVvStore.keyword = ev}
+                                onKeyup={onInputKeyup}/>
+                        <NButton onClick={() => adminVvStore.changePage(1)} type="primary" ghost>搜索</NButton>
+                    </NInputGroup>
+                </div>
                 <div class="table-toolbar">
                     <NButton onClick={onClickNew} type="primary">New</NButton>
                 </div>
