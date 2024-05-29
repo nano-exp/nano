@@ -42,4 +42,13 @@ public class VvRepository {
                 .query(Integer.class)
                 .single();
     }
+
+    public void createVv(@NotNull Vv vv) {
+        var sql = """
+                INSERT INTO vv (name, url, comment)
+                VALUES (:name, :url, :comment);
+                """;
+        this.jdbcClient.sql(sql).paramSource(vv)
+                .update();
+    }
 }

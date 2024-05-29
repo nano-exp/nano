@@ -1,38 +1,61 @@
 package nano.service;
 
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.PutObjectRequest;
+import io.minio.*;
+import lombok.SneakyThrows;
+import nano.common.Env;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 @Service
 public class R2Service {
 
-    private final AmazonS3 s3Client;
+    private static final String BUCKET_NAME = "nano";
+    private final MinioClient r2Client;
 
     public R2Service() {
-        this.s3Client = this.createClient();
+        this.r2Client = this.createClient();
     }
 
-    public AmazonS3 createClient() {
+    public MinioClient createClient() {
         try {
-            var accessKey = "";
-            var secretKey = "";
-            var credentials = new BasicAWSCredentials(accessKey, secretKey);
-            var credentialsProvider = new AWSStaticCredentialsProvider(credentials);
-            return AmazonS3ClientBuilder.standard()
-                    .withCredentials(credentialsProvider)
+            return MinioClient.builder()
+                    .region("auto")
+                    .credentials(Env.R2_ACCESS_KEY, Env.R2_SECRET_KEY)
+                    .endpoint(Env.R2_ENDPOINT)
                     .build();
         } catch (Exception ex) {
             return null;
         }
     }
 
-    public void putObject() {
-        var request = new PutObjectRequest("nano", "", "");
-        this.s3Client.putObject(request);
+    @SneakyThrows
+    public ObjectWriteResponse putObject(@NotNull Resource resource, @NotNull String objectKey, String contentType) {
+        var args = PutObjectArgs.builder()
+                .bucket(BUCKET_NAME)
+                .object(objectKey)
+                .contentType(contentType)
+                .stream(resource.getInputStream(), resource.contentLength(), -1)
+                .build();
+        return this.r2Client.putObject(args);
     }
+
+    @SneakyThrows
+    public GetObjectResponse getObject(String objectKey) {
+        var args = GetObjectArgs.builder()
+                .bucket(BUCKET_NAME)
+                .object(objectKey)
+                .build();
+        return this.r2Client.getObject(args);
+    }
+
+    @SneakyThrows
+    public void removeObject(String objectKey) {
+        var args = RemoveObjectArgs.builder()
+                .bucket(BUCKET_NAME)
+                .object(objectKey)
+                .build();
+        this.r2Client.removeObject(args);
+    }
+
 }
