@@ -1,14 +1,12 @@
 package nano.repository;
 
 import lombok.RequiredArgsConstructor;
-import nano.model.NanoMeta;
 import nano.model.Vv;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.StringJoiner;
 
 @Repository
 @RequiredArgsConstructor
