@@ -19,7 +19,8 @@ public class VvRepository {
         var sql = """
                 SELECT id, name, url, comment
                 FROM vv
-                LIMIT 1 OFFSET ABS(RANDOM()) % (SELECT COUNT(*) FROM vv);
+                ORDER BY RANDOM()
+                LIMIT 1;
                 """;
         return this.jdbcClient.sql(sql)
                 .query(Vv.class)
