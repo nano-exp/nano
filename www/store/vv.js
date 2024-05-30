@@ -17,8 +17,13 @@ export const useVvStore = defineStore('app', {
         async randomVv() {
             this.pageIndex = 1
             this.showLoadMore = false
-            const vv = await getRandomVv()
-            this.list = [vv]
+            try {
+                this.loading = true
+                const vv = await getRandomVv()
+                this.list = [vv]
+            } finally {
+                this.loading = false
+            }
         },
         async onSearchVv(append = false) {
             if (!append) {
