@@ -1,7 +1,8 @@
 import { defineComponent, onMounted } from 'vue'
-import { NInputGroup, NInput, NButton, NList, NListItem, NImage, NSpin, NEmpty } from 'naive-ui'
+import { NInputGroup, NInput, NButton, NList, NSpin, NEmpty } from 'naive-ui'
 import { css } from '@emotion/css'
-import { useVvStore } from '../store/vv.js'
+import { useVvStore } from '../../store/vv.js'
+import VvCard from './VvCard.jsx'
 
 const ClassName = css`
     margin: 0 auto;
@@ -22,11 +23,13 @@ const ClassName = css`
         margin-top: 16px;
 
         .image-item {
-            margin: 0 auto;
-            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
             .item-title {
                 text-align: center;
+                margin-top: .5rem;
                 font-size: 16px;
             }
         }
@@ -90,14 +93,7 @@ export default defineComponent({
                         {vvStore.list.length > 0 ? (
                             <>
                                 <NList hoverable>
-                                    {vvStore.list.map((it) => (
-                                        <NListItem key={it.id}>
-                                            <div class="image-item">
-                                                <NImage width="100%" src={it.url}/>
-                                                <div class="item-title">{it.name}</div>
-                                            </div>
-                                        </NListItem>
-                                    ))}
+                                    {vvStore.list.map((it) => (<VvCard key={it.id} item={it}/>))}
                                 </NList>
                                 {vvStore.showLoadMore && (
                                     <div class="load-more">

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const Nano = () => import('./pages/Nano.jsx')
-const Vv = () => import('./pages/Vv.jsx')
+const Vv = () => import('./pages/vv/Vv.jsx')
 const AdminVv = () => import('./pages/admin-vv/AdminVv.jsx')
 const NotFound = () => import('./common/NotFound.jsx')
 

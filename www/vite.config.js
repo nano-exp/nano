@@ -9,7 +9,7 @@ export default defineConfig({
     server: {
         proxy: {
             '/api': {
-                target: 'http://localhost:9000',
+                target: process.env.PROXY_TARGET ?? 'http://localhost:9000',
                 changeOrigin: true,
             },
         }
