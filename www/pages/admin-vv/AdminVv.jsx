@@ -3,6 +3,7 @@ import { css } from '@emotion/css'
 import { useAdminVvStore } from '../../store/adminVv.js'
 import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover, NSpin } from 'naive-ui'
 import NewModal from './NewModal.jsx'
+import { isMobile } from '../../common/utils.js'
 
 const ClassName = css`
     margin: 0 auto;
@@ -81,6 +82,7 @@ export default defineComponent({
                 pageSize: adminVvStore.pageSize,
                 page: adminVvStore.pageIndex,
                 pageCount: Math.ceil(adminVvStore.totalCount / adminVvStore.pageSize),
+                simple: isMobile(),
                 showQuickJumper: true,
                 'onUpdate:page': async (ev) => {
                     await adminVvStore.changePage(ev)

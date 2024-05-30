@@ -1,9 +1,10 @@
 import { defineComponent, ref } from 'vue'
-import { NButton, NInput, NModal, NUpload, NUploadDragger } from 'naive-ui'
+import { NButton, NInput, NModal, NUpload, NUploadDragger, useMessage } from 'naive-ui'
 import { useAdminVvStore } from '../../store/adminVv.js'
 
 export default defineComponent({
     setup() {
+        const message = useMessage()
         const adminVvStore = useAdminVvStore()
         const saveLoading = ref(false)
 
@@ -11,6 +12,8 @@ export default defineComponent({
             try {
                 saveLoading.value = true
                 await adminVvStore.saveNewData()
+            } catch (err) {
+                message.error(err.message)
             } finally {
                 saveLoading.value = false
             }

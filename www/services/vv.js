@@ -23,4 +23,7 @@ export async function createVv({ file, filename, token }) {
         },
         body: form,
     })
+    if (!response.ok) {
+        throw new Error(response.statusText || `Error: ${response.status}`)
+    }
 }
