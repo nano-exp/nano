@@ -50,7 +50,7 @@ export default defineComponent({
         const vvStore = useVvStore()
 
         onMounted(async () => {
-            await vvStore.onSearchVv()
+            await vvStore.randomVv()
         })
 
         async function onInputKeyup(ev) {
@@ -74,7 +74,15 @@ export default defineComponent({
                                 onInput={(ev) => vvStore.keyword = ev}
                                 clearable
                                 onKeyup={onInputKeyup}/>
-                        <NButton onClick={() => vvStore.onSearchVv()} type="primary" ghost>搜索</NButton>
+                        {vvStore.keyword ? (
+                            <NButton onClick={() => vvStore.onSearchVv()} type="primary" ghost>
+                                搜索结果
+                            </NButton>
+                        ) : (
+                            <NButton onClick={() => vvStore.randomVv()} type="primary" ghost>
+                                手气不错
+                            </NButton>
+                        )}
                     </NInputGroup>
                 </div>
                 <div class="image-list">

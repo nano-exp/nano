@@ -1,3 +1,8 @@
+export async function getRandomVv() {
+    const response = await fetch('/api/vv/random')
+    return await response.json()
+}
+
 export async function searchVv({ keyword, pageIndex, pageSize }) {
     const params = new URLSearchParams()
     params.append('keyword', keyword)
@@ -27,6 +32,7 @@ export async function createVv({ file, filename, token }) {
         throw new Error(response.statusText || `Error: ${response.status}`)
     }
 }
+
 export async function deleteVv({ id, token }) {
     const form = new FormData()
     form.append('id', id)

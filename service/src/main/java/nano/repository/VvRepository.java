@@ -15,6 +15,19 @@ public class VvRepository {
 
     private final JdbcClient jdbcClient;
 
+    public @Nullable Vv getVvByOffset(@NotNull Integer offset) {
+        var sql = """
+                SELECT id, name, url, comment
+                FROM vv
+                LIMIT 1 OFFSET :offset;
+                """;
+        return this.jdbcClient.sql(sql)
+                .param("offset", offset)
+                .query(Vv.class)
+                .optional()
+                .orElse(null);
+    }
+
     public @Nullable Vv getVvById(@NotNull Integer id) {
         var sql = """
                 SELECT id, name, url, comment

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { searchVv } from '../services/vv.js'
+import { getRandomVv, searchVv } from '../services/vv.js'
 
 export const useVvStore = defineStore('app', {
     state() {
@@ -14,6 +14,12 @@ export const useVvStore = defineStore('app', {
         }
     },
     actions: {
+        async randomVv() {
+            this.pageIndex = 1
+            this.showLoadMore = false
+            const vv = await getRandomVv()
+            this.list = [vv]
+        },
         async onSearchVv(append = false) {
             if (!append) {
                 this.pageIndex = 1

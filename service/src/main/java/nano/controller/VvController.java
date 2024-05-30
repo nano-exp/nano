@@ -22,6 +22,13 @@ public class VvController {
     private final VvService vvService;
     private final NanoService nanoService;
 
+
+    @GetMapping("/random")
+    public ResponseEntity<Vv> random() {
+        var vv = this.vvService.random();
+        return ResponseEntity.ok(vv);
+    }
+
     @GetMapping("/search")
     public ResponseEntity<List<Vv>> search(@RequestParam(name = "keyword", defaultValue = "") final String keyword,
                                            @RequestParam(name = "pageIndex", defaultValue = "1") final Integer pageIndex,

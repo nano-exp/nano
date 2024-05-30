@@ -5,16 +5,14 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import nano.common.Env;
 import nano.model.Vv;
-import nano.repository.NanoRepository;
 import nano.repository.VvRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Service
@@ -22,21 +20,13 @@ import java.util.List;
 public class VvService {
 
     private final VvRepository vvRepository;
-    private final NanoRepository nanoRepository;
     private final R2Service r2Service;
 
     public @NotNull List<@NotNull Vv> search(@NotNull final String keyword,
                                              @NotNull final Integer pageIndex,
                                              @NotNull final Integer pageSize) {
         var l = this.vvRepository.findVvList(keyword, pageSize, (pageIndex - 1) * pageSize);
-        if (ObjectUtils.isEmpty(keyword)) {
-            l = new ArrayList<>(l);
-            Collections.shuffle(l);
-        }
-        for (var it : l) {
-            var url = it.getUrl();
-            it.setUrl(Env.CDN_R2_HOST + url.substring(1));
-        }
+        l.forEach(this::withCdn);
         return l;
     }
 
@@ -65,5 +55,18 @@ public class VvService {
             this.vvRepository.deleteVv(id);
             this.r2Service.removeObject(vv.getUrl().substring(1));
         }
+    }
+
+    public @NotNull Vv random() {
+        var count = this.count("");
+        int offset = ThreadLocalRandom.current().nextInt(count);
+        var vv = Objects.requireNonNull(this.vvRepository.getVvByOffset(offset));
+        return this.withCdn(vv);
+    }
+
+    private Vv withCdn(Vv vv) {
+        var url = vv.getUrl();
+        vv.setUrl(Env.CDN_R2_HOST + url.substring(1));
+        return vv;
     }
 }
