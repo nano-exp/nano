@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import nano.model.Vv;
 import nano.service.NanoService;
 import nano.service.VvService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,16 @@ public class VvController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         } else {
             this.vvService.newVv(filename, file.getResource(), file.getContentType());
+            return ResponseEntity.ok().build();
+        }
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<?> delete(@RequestParam("id") @NotNull Integer id) {
+        if (!this.nanoService.isAuthorized()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } else {
+            this.vvService.deleteVv(id);
             return ResponseEntity.ok().build();
         }
     }

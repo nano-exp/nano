@@ -57,4 +57,13 @@ public class VvService {
             this.vvRepository.createVv(vv);
         }
     }
+
+    @SneakyThrows
+    public void deleteVv(@NotNull Integer id) {
+        var vv = this.vvRepository.getVv(id);
+        if (vv != null) {
+            this.vvRepository.deleteVv(id);
+            this.r2Service.removeObject(vv.getUrl().substring(1));
+        }
+    }
 }

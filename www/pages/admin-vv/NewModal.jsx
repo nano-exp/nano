@@ -1,4 +1,4 @@
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { NButton, NInput, NModal, NUpload, NUploadDragger, useMessage } from 'naive-ui'
 import { useAdminVvStore } from '../../store/adminVv.js'
 
@@ -12,6 +12,7 @@ export default defineComponent({
             try {
                 saveLoading.value = true
                 await adminVvStore.saveNewData()
+                message.success('新增成功')
             } catch (err) {
                 message.error(err.message)
             } finally {
@@ -34,20 +35,25 @@ export default defineComponent({
             }
         }
 
+        const enteredCorrectly = computed(() => {
+            return adminVvStore.newData.filename && adminVvStore.newData.getFile
+        })
+
         return {
             adminVvStore,
             onClickSave,
             saveLoading,
             onSelectFile,
             onCleanData,
+            enteredCorrectly,
         }
     },
-    render({ adminVvStore, onClickSave, saveLoading, onSelectFile, onCleanData }) {
+    render({ adminVvStore, onClickSave, saveLoading, onSelectFile, onCleanData, enteredCorrectly }) {
         return (
             <NModal show={adminVvStore.showNewModal}
                     onUpdate:show={(ev) => adminVvStore.showNewModal = ev}
                     preset="card"
-                    title={'New'}
+                    title={'新增'}
                     style={{ width: '600px' }}
                     bordered={false}
                     onAfterLeave={onCleanData}
@@ -55,28 +61,30 @@ export default defineComponent({
                 {{
                     default: () => (
                         <div style="display: flex;flex-direction: column; gap: 8px;">
-                            <div><strong>File</strong></div>
+                            <div><strong>文件</strong></div>
                             <NUpload defaultUpload={false}
                                      max={1}
                                      onChange={onSelectFile}>
                                 <NUploadDragger>
                                     <div style="min-height: 50px;display: grid;place-items: center;">
-                                        Click or drag a file to this area to upload
+                                        单击或将文件拖到此区域进行上传
                                     </div>
                                 </NUploadDragger>
                             </NUpload>
-                            <div><strong>Filename</strong></div>
+                            <div><strong>文件名</strong></div>
                             <NInput value={adminVvStore.newData.filename}
                                     clearable
                                     onInput={(ev) => adminVvStore.newData.filename = ev}
-                                    placeholder="Enter filename"/>
+                                    placeholder="输入文件名"/>
                         </div>
                     ),
                     footer: () => (
                         <div style="text-align: right;">
                             <NButton loading={saveLoading}
+                                     size="large"
+                                     disabled={!enteredCorrectly}
                                      onClick={onClickSave}
-                                     type="primary">Save</NButton>
+                                     type="primary">保存</NButton>
                         </div>
                     )
                 }}

@@ -3,6 +3,7 @@ package nano.repository;
 import lombok.RequiredArgsConstructor;
 import nano.model.Vv;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,30 @@ import java.util.List;
 public class VvRepository {
 
     private final JdbcClient jdbcClient;
+
+    public @Nullable Vv getVv(@NotNull Integer id) {
+        var sql = """
+                SELECT id, name, url, comment
+                FROM vv
+                WHERE id = :id
+                """;
+        return this.jdbcClient.sql(sql)
+                .param("id", id)
+                .query(Vv.class)
+                .optional()
+                .orElse(null);
+    }
+
+    public void deleteVv(@NotNull Integer id) {
+        var sql = """
+                DELETE
+                FROM vv
+                WHERE id = :id
+                """;
+        this.jdbcClient.sql(sql)
+                .param("id", id)
+                .update();
+    }
 
     public @NotNull List<Vv> findVvList(@NotNull final String keyword, Integer limit, Integer offset) {
         var sql = """

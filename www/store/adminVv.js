@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
-import { createVv, searchVv } from '../services/vv.js'
+import { createVv, deleteVv, searchVv } from '../services/vv.js'
 import GUI from 'lil-gui'
-import { unref } from 'vue'
 
 export const useAdminVvStore = defineStore('app', {
     state() {
@@ -19,10 +18,21 @@ export const useAdminVvStore = defineStore('app', {
             newData: {
                 filename: '',
                 getFile: null,
-            }
+            },
+            showDeleteModal: false,
+            toDeleteId: null,
         }
     },
     actions: {
+        async deleteVv() {
+            const { token } = this
+            await deleteVv({
+                id: this.toDeleteId,
+                token,
+            })
+            this.showDeleteModal = false
+            await this.changePage(1)
+        },
         async saveNewData() {
             const { token } = this
             await createVv({

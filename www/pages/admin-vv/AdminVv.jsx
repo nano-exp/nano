@@ -3,6 +3,7 @@ import { css } from '@emotion/css'
 import { useAdminVvStore } from '../../store/adminVv.js'
 import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover, NSpin } from 'naive-ui'
 import NewModal from './NewModal.jsx'
+import DeleteModal from './DeleteModal.jsx'
 import { isMobile } from '../../common/utils.js'
 
 const ClassName = css`
@@ -21,6 +22,8 @@ const ClassName = css`
     }
 
     .table-toolbar {
+        display: flex;
+        gap: .5rem;
         margin-top: 1rem;
     }
 
@@ -41,6 +44,10 @@ export default defineComponent({
 
         function onClickNew() {
             adminVvStore.showNewModal = true
+        }
+
+        function onClickDelete() {
+            adminVvStore.showDeleteModal = true
         }
 
         onMounted(async () => {
@@ -83,6 +90,7 @@ export default defineComponent({
                 page: adminVvStore.pageIndex,
                 pageCount: Math.ceil(adminVvStore.totalCount / adminVvStore.pageSize),
                 simple: isMobile(),
+                itemCount: adminVvStore.totalCount,
                 showQuickJumper: true,
                 'onUpdate:page': async (ev) => {
                     await adminVvStore.changePage(ev)
@@ -99,12 +107,14 @@ export default defineComponent({
         return {
             adminVvStore,
             onClickNew,
+            onClickDelete,
             dataTableColumns,
             dataTablePagination,
             onInputKeyup,
         }
     },
-    render({ adminVvStore, onClickNew, dataTableColumns, dataTablePagination, onInputKeyup, }) {
+    render({ adminVvStore, onClickNew, onClickDelete, dataTableColumns, dataTablePagination, onInputKeyup, }) {
+        const total = new Intl.NumberFormat().format(adminVvStore.totalCount)
         return (
             <div class={ClassName}>
                 <div class="title">{adminVvStore.name}</div>
@@ -118,7 +128,8 @@ export default defineComponent({
                     </NInputGroup>
                 </div>
                 <div class="table-toolbar">
-                    <NButton onClick={onClickNew} type="primary">New</NButton>
+                    <NButton onClick={onClickNew} secondary type="primary">新增</NButton>
+                    <NButton onClick={onClickDelete} secondary>删除</NButton>
                 </div>
                 <div class="data-table">
                     <NSpin show={adminVvStore.loading}>
@@ -126,10 +137,19 @@ export default defineComponent({
                             key={(it) => it.id}
                             columns={dataTableColumns}
                             data={adminVvStore.list}/>
-                        <NPagination {...dataTablePagination}/>
+                        <div>
+                            <NPagination {...dataTablePagination}>
+                                {{
+                                    prefix: ({ itemCount }) => (
+                                        <span>共 {itemCount} 项</span>
+                                    )
+                                }}
+                            </NPagination>
+                        </div>
                     </NSpin>
                 </div>
                 <NewModal/>
+                <DeleteModal/>
             </div>
         )
     }
