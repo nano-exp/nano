@@ -58,9 +58,7 @@ public class VvService {
     }
 
     public @NotNull Vv random() {
-        var count = this.count("");
-        int offset = ThreadLocalRandom.current().nextInt(count);
-        var vv = Objects.requireNonNull(this.vvRepository.getVvByOffset(offset));
+        var vv = this.vvRepository.getRandomVv();
         return this.withCdn(vv);
     }
 
