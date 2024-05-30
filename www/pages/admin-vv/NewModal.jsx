@@ -30,7 +30,7 @@ export default defineComponent({
         function onCleanData(ev) {
             adminVvStore.newData = {
                 filename: '',
-                file: null,
+                getFile: null,
             }
         }
 
