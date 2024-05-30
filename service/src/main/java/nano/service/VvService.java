@@ -47,8 +47,8 @@ public class VvService {
     @SneakyThrows
     public void newVv(@NotNull String filename, @NotNull Resource resource, String contentType) {
         var name = filename.replaceFirst("[.][^.]+$", "");
-        var count = this.count(name);
-        if (count == 0) {
+        var exist = this.vvRepository.getVvByName(name);
+        if (exist == null) {
             var objectKey = "vv/" + filename;
             this.r2Service.putObject(resource, objectKey, contentType);
             var vv = new Vv();
@@ -60,7 +60,7 @@ public class VvService {
 
     @SneakyThrows
     public void deleteVv(@NotNull Integer id) {
-        var vv = this.vvRepository.getVv(id);
+        var vv = this.vvRepository.getVvById(id);
         if (vv != null) {
             this.vvRepository.deleteVv(id);
             this.r2Service.removeObject(vv.getUrl().substring(1));

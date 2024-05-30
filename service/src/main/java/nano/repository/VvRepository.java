@@ -15,7 +15,7 @@ public class VvRepository {
 
     private final JdbcClient jdbcClient;
 
-    public @Nullable Vv getVv(@NotNull Integer id) {
+    public @Nullable Vv getVvById(@NotNull Integer id) {
         var sql = """
                 SELECT id, name, url, comment
                 FROM vv
@@ -23,6 +23,19 @@ public class VvRepository {
                 """;
         return this.jdbcClient.sql(sql)
                 .param("id", id)
+                .query(Vv.class)
+                .optional()
+                .orElse(null);
+    }
+
+    public @Nullable Vv getVvByName(@NotNull String name) {
+        var sql = """
+                SELECT id, name, url, comment
+                FROM vv
+                WHERE name = :name
+                """;
+        return this.jdbcClient.sql(sql)
+                .param("name", name)
                 .query(Vv.class)
                 .optional()
                 .orElse(null);
