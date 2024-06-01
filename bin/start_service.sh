@@ -7,4 +7,4 @@ if [ -f .env ]; then
     . .env
 fi
 
-exec java -Xms20m -Xmx20m -jar service/build/libs/service.jar "$@"
+exec java -Xms512m -Xmx512m -jar service/build/libs/service.jar "$@"
