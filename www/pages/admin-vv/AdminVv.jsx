@@ -5,6 +5,7 @@ import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover
 import NewModal from './NewModal.jsx'
 import DeleteModal from './DeleteModal.jsx'
 import { isMobile } from '../../common/utils.js'
+import withProvider from '../../common/withProvider.jsx'
 
 const ClassName = css`
     margin: 0 auto;
@@ -38,7 +39,7 @@ const ClassName = css`
 `
 
 
-export default defineComponent({
+const AdminVv = defineComponent({
     setup() {
         const adminVvStore = useAdminVvStore()
 
@@ -154,3 +155,5 @@ export default defineComponent({
         )
     }
 })
+
+export default withProvider(AdminVv)

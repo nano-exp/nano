@@ -3,6 +3,7 @@ import { NInputGroup, NInput, NButton, NList, NSpin, NEmpty } from 'naive-ui'
 import { css } from '@emotion/css'
 import { useVvStore } from '../../store/vv.js'
 import VvCard from './VvCard.jsx'
+import withProvider from '../../common/withProvider.jsx'
 
 const ClassName = css`
     margin: 0 auto;
@@ -48,7 +49,7 @@ const ClassName = css`
 
 `
 
-export default defineComponent({
+const Vv = defineComponent({
     setup() {
         const vvStore = useVvStore()
 
@@ -114,3 +115,5 @@ export default defineComponent({
         )
     },
 })
+
+export default withProvider(Vv)
