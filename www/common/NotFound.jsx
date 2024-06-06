@@ -5,7 +5,7 @@ const ClassName = css`
     min-height: 100vh;
     display: grid;
     place-items: center;
-    font-size: 7rem;
+    font-size: 4rem;
     font-weight: bold;
 `
 
