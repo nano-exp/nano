@@ -4,6 +4,7 @@ import { css } from '@emotion/css'
 import { useVvStore } from '../../store/vv.js'
 import VvCard from './VvCard.jsx'
 import withProvider from '../../common/withProvider.jsx'
+import { useRoute, useRouter } from 'vue-router'
 
 const ClassName = css`
     margin: 0 auto;
@@ -52,30 +53,47 @@ const ClassName = css`
 const Vv = defineComponent({
     setup() {
         const vvStore = useVvStore()
+        const router = useRouter()
+        const route = useRoute()
 
-        onMounted(async () => {
-            await vvStore.randomVv()
-        })
+        async function onInputKeyword(ev) {
+            vvStore.keyword = ev
+            await router.replace({ query: { q: ev } })
+        }
 
         async function onInputKeyup(ev) {
             if (ev.key === 'Enter') {
-                await vvStore.onSearchVv()
+                if(vvStore.keyword) {
+                    await vvStore.onSearchVv()
+                } else {
+                    await vvStore.randomVv()
+                }
             }
         }
 
+        onMounted(async () => {
+            if (route.query.q) {
+                vvStore.keyword = route.query.q
+                await vvStore.onSearchVv()
+            } else {
+                await vvStore.randomVv()
+            }
+        })
+
         return {
             vvStore,
+            onInputKeyword,
             onInputKeyup,
         }
     },
-    render({ vvStore, onInputKeyup }) {
+    render({ vvStore, onInputKeyup, onInputKeyword, }) {
         return (
             <div class={ClassName}>
                 <div class="title">{vvStore.name}</div>
                 <div class="search-form">
                     <NInputGroup>
                         <NInput value={vvStore.keyword}
-                                onInput={(ev) => vvStore.keyword = ev}
+                                onInput={onInputKeyword}
                                 clearable
                                 onKeyup={onInputKeyup}/>
                         {vvStore.keyword ? (
