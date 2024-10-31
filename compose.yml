@@ -7,4 +7,4 @@ services:
     working_dir: /app
     volumes:
     - .:/app
-    command: ["./start_service.sh"]
+    command: ["./start_nano.sh"]
