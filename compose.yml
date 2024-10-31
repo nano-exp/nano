@@ -1,0 +1,10 @@
+services:
+  nano:
+    image: public.ecr.aws/docker/library/openjdk:23.0.1
+    container_name: nano
+    ports:
+    - '127.0.0.1:9000:9000'
+    working_dir: /app
+    volumes:
+    - .:/app
+    command: ["./start_service.sh"]
