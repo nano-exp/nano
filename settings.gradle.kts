@@ -7,4 +7,4 @@ pluginManagement {
 
 rootProject.name = "nano"
 
-include("service", "www")
+include("server", "web")

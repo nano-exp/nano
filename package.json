@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "vite --config www/vite.config.js",
-    "build": "vite build --config www/vite.config.js"
+    "dev": "vite --config web/vite.config.js",
+    "build": "vite build --config web/vite.config.js"
   },
   "keywords": [],
   "author": "cbdyzj",

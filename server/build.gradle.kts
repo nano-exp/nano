@@ -36,7 +36,7 @@ dependencies {
 
 tasks {
     processResources {
-        from("${rootDir}/www/dist") {
+        from("${rootDir}/web/dist") {
             into("static")
         }
     }

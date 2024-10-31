@@ -5,4 +5,4 @@ if [ -f .env ]; then
     . .env
 fi
 
-exec java -Xms1024m -Xmx1024m -jar service/build/libs/service.jar "$@"
+exec java -Xms1024m -Xmx1024m -jar server/build/libs/server.jar "$@"
