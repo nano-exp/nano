@@ -1,6 +1,6 @@
 services:
   nano:
-    image: public.ecr.aws/docker/library/openjdk:23.0.1
+    image: public.ecr.aws/docker/library/eclipse-temurin:23
     container_name: nano
     ports:
     - '127.0.0.1:9000:9000'
