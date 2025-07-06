@@ -1,5 +1,6 @@
 package nano.service;
 
+import io.minio.ObjectWriteResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -39,10 +40,12 @@ public class VvService {
         var exist = this.vvRepository.getVvByName(name);
         if (exist == null) {
             var objectKey = "vv/" + filename;
-            this.r2Service.putObject(resource, objectKey, contentType);
+            var response = this.r2Service.putObject(resource, objectKey, contentType);
+            var etag = response.etag();
             var vv = new Vv();
             vv.setName(name);
             vv.setUrl("/vv/" + filename);
+            vv.setComment(etag);
             this.vvRepository.createVv(vv);
         }
     }
