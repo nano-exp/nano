@@ -1,4 +1,5 @@
 export class VVItem {
-  url: string
+  id: number
   name: string
+  url: string
 }
