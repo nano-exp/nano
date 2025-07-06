@@ -1,18 +1,20 @@
 <template>
-  <NListItem :key="props.item.id">
+  <NListItem :key="item.id">
     <div class="image-item">
       <NImage width="100%"
               height="400px"
               object-fit="cover"
               :show-toolbar="false"
-              :src="props.item.url"/>
-      <div class="item-title">{{ props.item.name }}</div>
+              :src="item.url"/>
+      <div class="item-title">{{ item.name }}</div>
     </div>
   </NListItem>
 </template>
 
 <script setup>
-const props = defineProps({
+import { NImage, NListItem } from 'naive-ui'
+
+defineProps({
   item: {
     type: Object,
     required: true
