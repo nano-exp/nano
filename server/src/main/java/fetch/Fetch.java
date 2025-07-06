@@ -34,7 +34,7 @@ public abstract class Fetch {
         try {
             return httpClient.send(httpRequest, bodyHandler);
         } catch (IOException | InterruptedException ex) {
-            UnsafeUtils.getUnsafe().throwException(ex);
+            UnsafeUtils.sneakyThrow(ex);
             return null;
         }
     }
