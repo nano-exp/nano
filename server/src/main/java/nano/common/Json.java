@@ -2,7 +2,6 @@ package nano.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fetch.support.UnsafeUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

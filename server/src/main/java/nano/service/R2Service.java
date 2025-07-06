@@ -13,16 +13,16 @@ public class R2Service {
     private static final String BUCKET_NAME = "nano";
     private final MinioClient r2Client;
 
-    public R2Service() {
-        this.r2Client = this.createClient();
+    public R2Service(Env env) {
+        this.r2Client = this.createClient(env);
     }
 
-    public MinioClient createClient() {
+    public MinioClient createClient(Env env) {
         try {
             return MinioClient.builder()
                     .region("auto")
-                    .credentials(Env.R2_ACCESS_KEY, Env.R2_SECRET_KEY)
-                    .endpoint(Env.R2_ENDPOINT)
+                    .credentials(env.R2_ACCESS_KEY, env.R2_SECRET_KEY)
+                    .endpoint(env.R2_ENDPOINT)
                     .build();
         } catch (Exception ex) {
             return null;

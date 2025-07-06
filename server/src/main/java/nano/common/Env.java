@@ -1,15 +1,20 @@
 package nano.common;
 
-public abstract class Env {
+import nano.repository.NanoRepository;
+import org.springframework.stereotype.Component;
 
-    private static String e(String key, String defaultValue) {
-        return System.getenv().getOrDefault(key, defaultValue);
+@Component
+public class Env {
+
+    public String CDN_R2_HOST;
+    public String R2_ACCESS_KEY;
+    public String R2_SECRET_KEY;
+    public String R2_ENDPOINT;
+
+    public Env(NanoRepository repository) {
+        this.CDN_R2_HOST = repository.getNanoMetaValue("CDN_R2_HOST");
+        this.R2_ACCESS_KEY = repository.getNanoMetaValue("R2_ACCESS_KEY");
+        this.R2_SECRET_KEY = repository.getNanoMetaValue("R2_SECRET_KEY");
+        this.R2_ENDPOINT = repository.getNanoMetaValue("R2_ENDPOINT");
     }
-
-    public static final String NANO_HOST = e("NANO_HOST", "http://localhost:9000/");
-    public static final String CDN_R2_HOST = e("CDN_R2_HOST", "");
-
-    public static final String R2_ACCESS_KEY = e("R2_ACCESS_KEY", "");
-    public static final String R2_SECRET_KEY = e("R2_SECRET_KEY", "");
-    public static final String R2_ENDPOINT = e("R2_ENDPOINT", "");
 }

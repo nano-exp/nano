@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @RequiredArgsConstructor
 public class VvService {
 
+    private final Env env;
     private final VvRepository vvRepository;
     private final R2Service r2Service;
 
@@ -64,7 +65,7 @@ public class VvService {
 
     private Vv withCdn(Vv vv) {
         var url = vv.getUrl();
-        vv.setUrl(Env.CDN_R2_HOST + url.substring(1));
+        vv.setUrl(this.env.CDN_R2_HOST + url.substring(1));
         return vv;
     }
 }

@@ -43,21 +43,21 @@ public class VvController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestParam("file") MultipartFile file,
                                     @RequestParam("filename") String filename) {
-        if (!this.nanoService.isAuthorized()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } else {
+        if (this.nanoService.isAuthorized()) {
             this.vvService.newVv(filename, file.getResource(), file.getContentType());
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam("id") @NotNull Integer id) {
-        if (!this.nanoService.isAuthorized()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } else {
+        if (this.nanoService.isAuthorized()) {
             this.vvService.deleteVv(id);
             return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 }
