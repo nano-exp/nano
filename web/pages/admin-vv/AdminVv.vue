@@ -3,9 +3,7 @@
     <div class="title">{{ adminVvStore.name }}</div>
     <div class="search-form">
       <NInputGroup>
-        <NInput v-model:value="adminVvStore.keyword"
-                clearable
-                @keyup="onInputKeyup"/>
+        <NInput v-model:value="adminVvStore.keyword" clearable @keyup="onInputKeyup" />
         <NButton @click="() => adminVvStore.changePage(1)" type="primary" ghost>搜索</NButton>
       </NInputGroup>
     </div>
@@ -15,7 +13,7 @@
     </div>
     <div class="data-table">
       <NSpin :show="adminVvStore.loading">
-        <NDataTable :columns="dataTableColumns" :data="adminVvStore.list" :row-key="it => it.id">
+        <NDataTable :columns="dataTableColumns" :data="adminVvStore.list" :row-key="(it) => it.id">
           <template #url="{ row }">
             <NPopover trigger="hover">
               <template #trigger>
@@ -111,14 +109,14 @@ async function onInputKeyup(ev) {
 }
 .table-toolbar {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   margin-top: 1rem;
 }
 .data-table {
   margin-top: 1rem;
 }
 .data-table-pagination {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   justify-content: flex-end;
 }
-</style> 
+</style>

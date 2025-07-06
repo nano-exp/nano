@@ -4,8 +4,8 @@ services:
     container_name: nano
     restart: always
     ports:
-    - '127.0.0.1:9000:9000'
+      - '127.0.0.1:9000:9000'
     working_dir: /app
     volumes:
-    - .:/app
-    command: ["./start_nano.sh"]
+      - .:/app
+    command: ['./start_nano.sh']

@@ -3,16 +3,9 @@
     <div class="title">{{ vvStore.name }}</div>
     <div class="search-form">
       <NInputGroup>
-        <NInput v-model:value="vvStore.keyword"
-                clearable
-                @input="onInputKeyword"
-                @keyup="onInputKeyup"/>
-        <NButton v-if="vvStore.keyword" @click="vvStore.onSearchVv" type="primary" ghost>
-          搜索结果
-        </NButton>
-        <NButton v-else @click="vvStore.randomVv" type="primary" ghost>
-          手气不错
-        </NButton>
+        <NInput v-model:value="vvStore.keyword" clearable @input="onInputKeyword" @keyup="onInputKeyup" />
+        <NButton v-if="vvStore.keyword" @click="vvStore.onSearchVv" type="primary" ghost> 搜索结果 </NButton>
+        <NButton v-else @click="vvStore.randomVv" type="primary" ghost> 手气不错 </NButton>
       </NInputGroup>
     </div>
     <div class="image-list">
@@ -27,7 +20,7 @@
         </template>
         <template v-else>
           <div class="empty">
-            <NEmpty description="空" size="large"/>
+            <NEmpty description="空" size="large" />
           </div>
         </template>
       </NSpin>
@@ -83,7 +76,7 @@ onMounted(async () => {
   font-size: 20px;
 }
 .search-form {
-  margin-top: .5rem;
+  margin-top: 0.5rem;
 }
 .image-list {
   margin-top: 16px;
@@ -98,4 +91,4 @@ onMounted(async () => {
   display: grid;
   place-items: center;
 }
-</style> 
+</style>

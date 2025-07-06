@@ -33,4 +33,4 @@ const appStore = useAppStore()
 .title > a {
   text-decoration: none;
 }
-</style> 
+</style>

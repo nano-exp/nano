@@ -1,7 +1,5 @@
 <template>
-  <div class="notfound">
-    4️⃣0️⃣4️⃣{{ emo }}
-  </div>
+  <div class="notfound">4️⃣0️⃣4️⃣{{ emo }}</div>
 </template>
 
 <script setup>
@@ -17,4 +15,4 @@ const emo = emoji[Math.floor(Math.random() * emoji.length)]
   font-size: 4rem;
   font-weight: bold;
 }
-</style> 
+</style>

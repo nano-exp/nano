@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "format": "prettier --write --cache ."
   },
   "keywords": [],
   "author": "cbdyzj",
@@ -20,6 +21,7 @@
     "lil-gui": "^0.20.0",
     "naive-ui": "^2.42.0",
     "pinia": "^3.0.3",
+    "prettier": "^3.6.2",
     "vite": "^7.0.2",
     "vue": "^3.5.17",
     "vue-router": "^4.5.1"

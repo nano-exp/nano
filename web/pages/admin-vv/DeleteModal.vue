@@ -1,27 +1,25 @@
 <template>
-  <NModal :show="adminVvStore.showDeleteModal"
-          @update:show="ev => adminVvStore.showDeleteModal = ev"
-          preset="card"
-          title="删除"
-          style="width: 400px;"
-          :bordered="false"
-          @after-leave="onCleanData"
-          segmented="segmented">
+  <NModal
+    :show="adminVvStore.showDeleteModal"
+    @update:show="(ev) => (adminVvStore.showDeleteModal = ev)"
+    preset="card"
+    title="删除"
+    style="width: 400px"
+    :bordered="false"
+    @after-leave="onCleanData"
+    segmented="segmented"
+  >
     <template #default>
-      <div style="display: flex;flex-direction: column; gap: 8px;">
+      <div style="display: flex; flex-direction: column; gap: 8px">
         <div><strong>ID</strong></div>
-        <NInput v-model:value="adminVvStore.toDeleteId"
-                clearable
-                placeholder="输入ID"/>
+        <NInput v-model:value="adminVvStore.toDeleteId" clearable placeholder="输入ID" />
       </div>
     </template>
     <template #footer>
-      <div style="text-align: right;">
-        <NButton :loading="deleteLoading"
-                 size="large"
-                 :disabled="!enteredCorrectly"
-                 @click="onClickDelete"
-                 type="error">保存</NButton>
+      <div style="text-align: right">
+        <NButton :loading="deleteLoading" size="large" :disabled="!enteredCorrectly" @click="onClickDelete" type="error"
+          >保存</NButton
+        >
       </div>
     </template>
   </NModal>
@@ -55,4 +53,4 @@ function onCleanData() {
 const enteredCorrectly = computed(() => {
   return !!adminVvStore.toDeleteId
 })
-</script> 
+</script>
