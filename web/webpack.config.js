@@ -58,11 +58,6 @@ const config = {
     }),
     new VueLoaderPlugin(),
   ],
-  resolve: {
-    alias: {
-      '@': resolve(import.meta.dirname, 'src'),
-    },
-  },
   output: {
     iife: true,
     filename: '[name].js',

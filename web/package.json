@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack --mode=production"
+    "build": "webpack --mode=production && rm -rf dist/*.LICENSE.txt"
   },
   "keywords": [],
   "author": "cbdyzj",
