@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@babel/preset-env':
-        specifier: 7.27.2
-        version: 7.27.2(@babel/core@7.28.0)
+        specifier: 7.28.0
+        version: 7.28.0(@babel/core@7.28.0)
       '@babel/preset-typescript':
         specifier: 7.27.1
         version: 7.27.1(@babel/core@7.28.0)
@@ -18,7 +18,7 @@ importers:
         specifier: 1.2.0
         version: 1.2.0
       '@emotion/css':
-        specifier: ^11.13.5
+        specifier: 11.13.5
         version: 11.13.5
       '@vue/babel-plugin-jsx':
         specifier: 1.4.0
@@ -36,40 +36,40 @@ importers:
         specifier: 5.6.3
         version: 5.6.3(webpack@5.99.9)
       less:
-        specifier: ^4.3.0
+        specifier: 4.3.0
         version: 4.3.0
       less-loader:
         specifier: 12.3.0
         version: 12.3.0(less@4.3.0)(webpack@5.99.9)
       lil-gui:
-        specifier: ^0.20.0
+        specifier: 0.20.0
         version: 0.20.0
       lodash-es:
         specifier: 4.17.21
         version: 4.17.21
       naive-ui:
-        specifier: ^2.42.0
+        specifier: 2.42.0
         version: 2.42.0(vue@3.5.17)
       pinia:
-        specifier: ^3.0.3
+        specifier: 3.0.3
         version: 3.0.3(vue@3.5.17)
       prettier:
-        specifier: ^3.6.2
+        specifier: 3.6.2
         version: 3.6.2
       style-loader:
         specifier: 4.0.0
         version: 4.0.0(webpack@5.99.9)
       vue:
-        specifier: ^3.5.17
+        specifier: 3.5.17
         version: 3.5.17
       vue-i18n:
-        specifier: 11.1.7
-        version: 11.1.7(vue@3.5.17)
+        specifier: 11.1.9
+        version: 11.1.9(vue@3.5.17)
       vue-loader:
         specifier: 17.4.2
         version: 17.4.2(vue@3.5.17)(webpack@5.99.9)
       vue-router:
-        specifier: ^4.5.1
+        specifier: 4.5.1
         version: 4.5.1(vue@3.5.17)
       webpack:
         specifier: 5.99.9
@@ -350,6 +350,12 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0-0
 
+  '@babel/plugin-transform-explicit-resource-management@7.28.0':
+    resolution: {integrity: sha512-K8nhUcn3f6iB+P3gwCv/no7OdzOZQcKchW6N389V6PD8NUWKZHzndOd9sPDVbMoBsbmjMqlB4L9fm+fEFNVlwQ==}
+    engines: {node: '>=6.9.0'}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+
   '@babel/plugin-transform-exponentiation-operator@7.27.1':
     resolution: {integrity: sha512-uspvXnhHvGKf2r4VVtBpeFnuDWsJLQ6MF6lGJLC89jBR1uoVeqM416AZtTuhTezOfgHicpJQmoD5YUakO/YmXQ==}
     engines: {node: '>=6.9.0'}
@@ -572,8 +578,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.0.0
 
-  '@babel/preset-env@7.27.2':
-    resolution: {integrity: sha512-Ma4zSuYSlGNRlCLO+EAzLnCmJK2vdstgv+n7aUP+/IKZrOfWHOJVdSJtuub8RzHTj3ahD37k5OKJWvzf16TQyQ==}
+  '@babel/preset-env@7.28.0':
+    resolution: {integrity: sha512-VmaxeGOwuDqzLl5JUkIRM1X2Qu2uKGxHEQWh+cvvbl7JuJRgKGJSfsEF/bUaxFhJl/XAyxBe7q7qSuTbKFuCyg==}
     engines: {node: '>=6.9.0'}
     peerDependencies:
       '@babel/core': ^7.0.0-0
@@ -655,16 +661,16 @@ packages:
   '@emotion/weak-memoize@0.4.0':
     resolution: {integrity: sha512-snKqtPW01tN0ui7yu9rGv69aJXr/a/Ywvl11sUjNtEcRc+ng/mQriFL0wLXMef74iHa/EkftbDzU9F8iFbH+zg==}
 
-  '@intlify/core-base@11.1.7':
-    resolution: {integrity: sha512-gYiGnQeJVp3kNBeXQ73m1uFOak0ry4av8pn+IkEWigyyPWEMGzB+xFeQdmGMFn49V+oox6294oGVff8bYOhtOw==}
+  '@intlify/core-base@11.1.9':
+    resolution: {integrity: sha512-Lrdi4wp3XnGhWmB/mMD/XtfGUw1Jt+PGpZI/M63X1ZqhTDjNHRVCs/i8vv8U1cwaj1A9fb0bkCQHLSL0SK+pIQ==}
     engines: {node: '>= 16'}
 
-  '@intlify/message-compiler@11.1.7':
-    resolution: {integrity: sha512-0ezkep1AT30NyuKj8QbRlmvMORCCRlOIIu9v8RNU8SwDjjTiFCZzczCORMns2mCH4HZ1nXgrfkKzYUbfjNRmng==}
+  '@intlify/message-compiler@11.1.9':
+    resolution: {integrity: sha512-84SNs3Ikjg0rD1bOuchzb3iK1vR2/8nxrkyccIl5DjFTeMzE/Fxv6X+A7RN5ZXjEWelc1p5D4kHA6HEOhlKL5Q==}
     engines: {node: '>= 16'}
 
-  '@intlify/shared@11.1.7':
-    resolution: {integrity: sha512-4yZeMt2Aa/7n5Ehy4KalUlvt3iRLcg1tq9IBVfOgkyWFArN4oygn6WxgGIFibP3svpaH8DarbNaottq+p0gUZQ==}
+  '@intlify/shared@11.1.9':
+    resolution: {integrity: sha512-H/83xgU1l8ox+qG305p6ucmoy93qyjIPnvxGWRA7YdOoHe1tIiW9IlEu4lTdsOR7cfP1ecrwyflQSqXdXBacXA==}
     engines: {node: '>= 16'}
 
   '@jridgewell/gen-mapping@0.3.12':
@@ -988,8 +994,8 @@ packages:
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
 
-  babel-plugin-polyfill-corejs3@0.11.1:
-    resolution: {integrity: sha512-yGCqvBT4rwMczo28xkH/noxJ6MZ4nJfkVYdoDaC/utLtWrXxv27HVrzAeSbqR8SxDsp46n0YF47EbHoixy6rXQ==}
+  babel-plugin-polyfill-corejs3@0.13.0:
+    resolution: {integrity: sha512-U+GNwMdSFgzVmfhNm8GJUX88AadB3uo9KpJqS3FaqNIPKgySuvMb+bHPsOmmuWyIcuqZj/pzt1RUIUZns4y2+A==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
 
@@ -2394,8 +2400,8 @@ packages:
     peerDependencies:
       vue: ^3.0.0
 
-  vue-i18n@11.1.7:
-    resolution: {integrity: sha512-CDrU7Cmyh1AxJjerQmipV9nVa//exVBdhTcWGlbfcDCN8bKp/uAe7Le6IoN4//5emIikbsSKe9Uofmf/xXkhOA==}
+  vue-i18n@11.1.9:
+    resolution: {integrity: sha512-N9ZTsXdRmX38AwS9F6Rh93RtPkvZTkSy/zNv63FTIwZCUbLwwrpqlKz9YQuzFLdlvRdZTnWAUE5jMxr8exdl7g==}
     engines: {node: '>= 16'}
     peerDependencies:
       vue: ^3.0.0
@@ -2866,6 +2872,14 @@ snapshots:
       '@babel/core': 7.28.0
       '@babel/helper-plugin-utils': 7.27.1
 
+  '@babel/plugin-transform-explicit-resource-management@7.28.0(@babel/core@7.28.0)':
+    dependencies:
+      '@babel/core': 7.28.0
+      '@babel/helper-plugin-utils': 7.27.1
+      '@babel/plugin-transform-destructuring': 7.28.0(@babel/core@7.28.0)
+    transitivePeerDependencies:
+      - supports-color
+
   '@babel/plugin-transform-exponentiation-operator@7.27.1(@babel/core@7.28.0)':
     dependencies:
       '@babel/core': 7.28.0
@@ -3105,7 +3119,7 @@ snapshots:
       '@babel/helper-create-regexp-features-plugin': 7.27.1(@babel/core@7.28.0)
       '@babel/helper-plugin-utils': 7.27.1
 
-  '@babel/preset-env@7.27.2(@babel/core@7.28.0)':
+  '@babel/preset-env@7.28.0(@babel/core@7.28.0)':
     dependencies:
       '@babel/compat-data': 7.28.0
       '@babel/core': 7.28.0
@@ -3135,6 +3149,7 @@ snapshots:
       '@babel/plugin-transform-duplicate-keys': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-duplicate-named-capturing-groups-regex': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-dynamic-import': 7.27.1(@babel/core@7.28.0)
+      '@babel/plugin-transform-explicit-resource-management': 7.28.0(@babel/core@7.28.0)
       '@babel/plugin-transform-exponentiation-operator': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-export-namespace-from': 7.27.1(@babel/core@7.28.0)
       '@babel/plugin-transform-for-of': 7.27.1(@babel/core@7.28.0)
@@ -3173,7 +3188,7 @@ snapshots:
       '@babel/plugin-transform-unicode-sets-regex': 7.27.1(@babel/core@7.28.0)
       '@babel/preset-modules': 0.1.6-no-external-plugins(@babel/core@7.28.0)
       babel-plugin-polyfill-corejs2: 0.4.14(@babel/core@7.28.0)
-      babel-plugin-polyfill-corejs3: 0.11.1(@babel/core@7.28.0)
+      babel-plugin-polyfill-corejs3: 0.13.0(@babel/core@7.28.0)
       babel-plugin-polyfill-regenerator: 0.6.5(@babel/core@7.28.0)
       core-js-compat: 3.43.0
       semver: 6.3.1
@@ -3291,17 +3306,17 @@ snapshots:
 
   '@emotion/weak-memoize@0.4.0': {}
 
-  '@intlify/core-base@11.1.7':
+  '@intlify/core-base@11.1.9':
     dependencies:
-      '@intlify/message-compiler': 11.1.7
-      '@intlify/shared': 11.1.7
+      '@intlify/message-compiler': 11.1.9
+      '@intlify/shared': 11.1.9
 
-  '@intlify/message-compiler@11.1.7':
+  '@intlify/message-compiler@11.1.9':
     dependencies:
-      '@intlify/shared': 11.1.7
+      '@intlify/shared': 11.1.9
       source-map-js: 1.2.1
 
-  '@intlify/shared@11.1.7': {}
+  '@intlify/shared@11.1.9': {}
 
   '@jridgewell/gen-mapping@0.3.12':
     dependencies:
@@ -3706,7 +3721,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-plugin-polyfill-corejs3@0.11.1(@babel/core@7.28.0):
+  babel-plugin-polyfill-corejs3@0.13.0(@babel/core@7.28.0):
     dependencies:
       '@babel/core': 7.28.0
       '@babel/helper-define-polyfill-provider': 0.6.5(@babel/core@7.28.0)
@@ -5069,10 +5084,10 @@ snapshots:
       evtd: 0.2.4
       vue: 3.5.17
 
-  vue-i18n@11.1.7(vue@3.5.17):
+  vue-i18n@11.1.9(vue@3.5.17):
     dependencies:
-      '@intlify/core-base': 11.1.7
-      '@intlify/shared': 11.1.7
+      '@intlify/core-base': 11.1.9
+      '@intlify/shared': 11.1.9
       '@vue/devtools-api': 6.6.4
       vue: 3.5.17
 
