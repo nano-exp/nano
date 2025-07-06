@@ -1,6 +1,6 @@
 services:
   nano:
-    image: public.ecr.aws/docker/library/eclipse-temurin:23
+    image: public.ecr.aws/docker/library/eclipse-temurin:24
     container_name: nano
     restart: always
     ports:
@@ -8,4 +8,4 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-    command: ['./start_nano.sh']
+    command: ['./nano.sh']
