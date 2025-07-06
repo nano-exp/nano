@@ -60,7 +60,7 @@ const config = {
   ],
   output: {
     iife: true,
-    filename: '[name].js',
+    filename: '[name].[chunkhash].js',
   },
   performance: {
     maxEntrypointSize: 1024 * 1024,
