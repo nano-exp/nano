@@ -16,14 +16,29 @@
   },
   "devDependencies": {
     "@emotion/css": "^11.13.5",
-    "@vitejs/plugin-vue": "^6.0.0",
+    "@babel/preset-env": "7.27.2",
+    "@babel/preset-typescript": "7.27.1",
+    "@vue/babel-plugin-jsx": "1.4.0",
+    "@date-fns/tz": "1.2.0",
     "less": "^4.3.0",
     "lil-gui": "^0.20.0",
     "naive-ui": "^2.42.0",
     "pinia": "^3.0.3",
     "prettier": "^3.6.2",
-    "vite": "^7.0.2",
     "vue": "^3.5.17",
-    "vue-router": "^4.5.1"
+    "babel-loader": "10.0.0",
+    "css-loader": "7.1.2",
+    "date-fns": "4.1.0",
+    "vue-router": "^4.5.1",
+    "html-webpack-plugin": "5.6.3",
+    "less-loader": "12.3.0",
+    "lodash-es": "4.17.21",
+    "style-loader": "4.0.0",
+    "yaml-loader": "0.8.1",
+    "vue-i18n": "11.1.7",
+    "vue-loader": "17.4.2",
+    "webpack": "5.99.9",
+    "webpack-cli": "6.0.1",
+    "webpack-dev-server": "5.2.2"
   }
 }
