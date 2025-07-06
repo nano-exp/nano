@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "vite --config web/vite.config.js",
-    "build": "vite build --config web/vite.config.js"
+    "build": "pnpm -r build"
   },
   "keywords": [],
   "author": "cbdyzj",
