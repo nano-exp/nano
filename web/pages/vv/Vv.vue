@@ -88,16 +88,7 @@ onMounted(async () => {
 .image-list {
   margin-top: 16px;
 }
-.image-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.item-title {
-  text-align: center;
-  margin-top: .5rem;
-  font-size: 16px;
-}
+
 .load-more {
   margin-top: 8px;
   text-align: center;

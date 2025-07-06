@@ -12,12 +12,29 @@
 </template>
 
 <script setup>
-import { NImage, NListItem } from 'naive-ui'
+import {NImage, NListItem} from 'naive-ui'
 
 defineProps({
   item: {
-    type: Object,
+    type: class {
+      url
+      name
+    },
     required: true
   }
 })
-</script> 
+</script>
+
+<style scoped>
+.image-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-title {
+  text-align: center;
+  margin-top: .5rem;
+  font-size: 16px;
+}
+</style>
