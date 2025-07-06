@@ -1,5 +1,5 @@
 <template>
-  <div class="adminvv-root">
+  <div class="admin-vv-root">
     <div class="title">{{ adminVvStore.name }}</div>
     <div class="search-form">
       <NInputGroup>
@@ -39,11 +39,11 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted } from 'vue'
-import { useAdminVvStore } from '../../store/adminVv.js'
 import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover, NSpin } from 'naive-ui'
-import NewModal from './NewModal.vue'
-import DeleteModal from './DeleteModal.vue'
-import { isMobile } from '../../common/utils.js'
+import { useAdminVvStore } from '#@/store/adminVv.js'
+import NewModal from '#@/pages/admin-vv/NewModal.vue'
+import DeleteModal from '#@/pages/admin-vv/DeleteModal.vue'
+import { isMobile } from '#@/common/utils.js'
 
 const adminVvStore = useAdminVvStore()
 
@@ -94,7 +94,7 @@ async function onInputKeyup(ev) {
 </script>
 
 <style scoped>
-.adminvv-root {
+.admin-vv-root {
   margin: 0 auto;
   padding: 1rem;
   min-height: 100vh;

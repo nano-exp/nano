@@ -9,13 +9,11 @@
 
 <script setup>
 import { NImage, NListItem } from 'naive-ui'
+import { VVItem } from '#@/pages/vv-model.js'
 
 defineProps({
   item: {
-    type: class {
-      url
-      name
-    },
+    type: VVItem,
     required: true,
   },
 })

@@ -3,9 +3,15 @@
     <div class="title">{{ vvStore.name }}</div>
     <div class="search-form">
       <NInputGroup>
-        <NInput v-model:value="vvStore.keyword" clearable @input="onInputKeyword" @keyup="onInputKeyup" />
-        <NButton v-if="vvStore.keyword" @click="vvStore.onSearchVv" type="primary" ghost> 搜索结果 </NButton>
-        <NButton v-else @click="vvStore.randomVv" type="primary" ghost> 手气不错 </NButton>
+        <NInput
+          v-model:value="vvStore.keyword"
+          placeholder="搜索"
+          @input="onInputKeyword"
+          @keyup="onInputKeyup"
+          clearable
+        />
+        <NButton v-if="vvStore.keyword" @click="vvStore.onSearchVv" type="primary" ghost> 搜索结果</NButton>
+        <NButton v-else @click="vvStore.randomVv" type="primary" ghost> 手气不错</NButton>
       </NInputGroup>
     </div>
     <div class="image-list">
@@ -31,9 +37,9 @@
 <script setup>
 import { onMounted } from 'vue'
 import { NInputGroup, NInput, NButton, NList, NSpin, NEmpty } from 'naive-ui'
-import { useVvStore } from '../../store/vv.js'
-import VvCard from './VvCard.vue'
 import { useRoute, useRouter } from 'vue-router'
+import VvCard from '#@/pages/vv/VvCard.vue'
+import { useVvStore } from '#@/store/vv.js'
 
 const vvStore = useVvStore()
 const router = useRouter()
@@ -72,12 +78,15 @@ onMounted(async () => {
   max-width: 800px;
   box-sizing: border-box;
 }
+
 .title {
   font-size: 20px;
 }
+
 .search-form {
   margin-top: 0.5rem;
 }
+
 .image-list {
   margin-top: 16px;
 }
@@ -86,6 +95,7 @@ onMounted(async () => {
   margin-top: 8px;
   text-align: center;
 }
+
 .empty {
   min-height: 200px;
   display: grid;
