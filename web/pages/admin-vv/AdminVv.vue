@@ -101,20 +101,25 @@ async function onInputKeyup(ev) {
   max-width: 800px;
   box-sizing: border-box;
 }
+
 .title {
   font-size: 20px;
 }
+
 .search-form {
   margin-top: 1rem;
 }
+
 .table-toolbar {
   display: flex;
   gap: 0.5rem;
   margin-top: 1rem;
 }
+
 .data-table {
   margin-top: 1rem;
 }
+
 .data-table-pagination {
   margin-top: 0.5rem;
   justify-content: flex-end;
