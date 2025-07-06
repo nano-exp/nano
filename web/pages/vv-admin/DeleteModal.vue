@@ -1,7 +1,7 @@
 <template>
   <NModal
-    :show="adminVvStore.showDeleteModal"
-    @update:show="(ev) => (adminVvStore.showDeleteModal = ev)"
+    :show="vvAdminStore.showDeleteModal"
+    @update:show="(ev) => (vvAdminStore.showDeleteModal = ev)"
     preset="card"
     title="删除"
     style="width: 400px"
@@ -12,7 +12,7 @@
     <template #default>
       <div style="display: flex; flex-direction: column; gap: 8px">
         <div><strong>ID</strong></div>
-        <NInput v-model:value="adminVvStore.toDeleteId" clearable placeholder="输入ID" />
+        <NInput v-model:value="vvAdminStore.toDeleteId" clearable placeholder="输入ID" />
       </div>
     </template>
     <template #footer>
@@ -28,16 +28,16 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { NButton, NInput, NModal, useMessage } from 'naive-ui'
-import { useAdminVvStore } from '../../store/adminVv.js'
+import { useVvAdminStore } from '#@/store/vv-admin.js'
 
 const message = useMessage()
-const adminVvStore = useAdminVvStore()
+const vvAdminStore = useVvAdminStore()
 const deleteLoading = ref(false)
 
 async function onClickDelete() {
   try {
     deleteLoading.value = true
-    await adminVvStore.deleteVv()
+    await vvAdminStore.deleteVv()
     message.success('删除成功')
   } catch (err) {
     message.error(err.message)
@@ -47,10 +47,10 @@ async function onClickDelete() {
 }
 
 function onCleanData() {
-  adminVvStore.toDeleteId = null
+  vvAdminStore.toDeleteId = null
 }
 
 const enteredCorrectly = computed(() => {
-  return !!adminVvStore.toDeleteId
+  return !!vvAdminStore.toDeleteId
 })
 </script>

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { getRandomVv, searchVv } from '../services/vv.js'
+import { getRandomVv, searchVv } from '#@/services/vv.js'
 
 export const useVvStore = defineStore('app', {
   state() {
@@ -15,39 +15,41 @@ export const useVvStore = defineStore('app', {
   },
   actions: {
     async randomVv() {
-      this.pageIndex = 1
-      this.showLoadMore = false
+      const store = this
+      store.pageIndex = 1
+      store.showLoadMore = false
       try {
-        this.loading = true
+        store.loading = true
         const vv = await getRandomVv()
-        this.list = [vv]
+        store.list = [vv]
       } finally {
-        this.loading = false
+        store.loading = false
       }
     },
     async onSearchVv(append = false) {
+      const store = this
       if (!append) {
-        this.pageIndex = 1
+        store.pageIndex = 1
       } else {
-        this.pageIndex = this.pageIndex + 1
+        store.pageIndex = store.pageIndex + 1
       }
       try {
-        this.loading = true
+        store.loading = true
         const r = await searchVv({
-          keyword: this.keyword,
-          pageIndex: this.pageIndex,
-          pageSize: this.pageSize,
+          keyword: store.keyword,
+          pageIndex: store.pageIndex,
+          pageSize: store.pageSize,
         })
         if (append) {
           if (r.list.length) {
-            this.list = this.list.concat(r.list)
+            store.list = store.list.concat(r.list)
           }
         } else {
-          this.list = r.list
+          store.list = r.list
         }
-        this.showLoadMore = r.list.length === this.pageSize
+        store.showLoadMore = r.list.length === store.pageSize
       } finally {
-        this.loading = false
+        store.loading = false
       }
     },
   },

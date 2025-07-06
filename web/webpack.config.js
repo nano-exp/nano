@@ -1,6 +1,6 @@
 import { resolve } from 'node:path'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { VueLoaderPlugin } from 'vue-loader'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 
 const RE_RAW = /raw/
 const RE_NON_RAW = /^((?!raw).)*$/
@@ -39,7 +39,7 @@ const config = {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env', ['@babel/preset-typescript', { isTSX: true, allExtensions: true }]],
-              plugins: ['@vue/babel-plugin-jsx', '@emotion'],
+              plugins: ['@vue/babel-plugin-jsx'],
             },
           },
         ],

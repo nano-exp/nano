@@ -15,12 +15,10 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@emotion/css": "11.13.5",
     "@babel/preset-env": "7.28.0",
     "@babel/preset-typescript": "7.27.1",
     "@vue/babel-plugin-jsx": "1.4.0",
     "@date-fns/tz": "1.2.0",
-    "less": "4.3.0",
     "lil-gui": "0.20.0",
     "naive-ui": "2.42.0",
     "pinia": "3.0.3",

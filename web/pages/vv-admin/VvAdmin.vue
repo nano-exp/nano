@@ -1,10 +1,10 @@
 <template>
   <div class="admin-vv-root">
-    <div class="title">{{ adminVvStore.name }}</div>
+    <div class="title">{{ vvAdminStore.name }}</div>
     <div class="search-form">
       <NInputGroup>
-        <NInput v-model:value="adminVvStore.keyword" clearable @keyup="onInputKeyup" />
-        <NButton @click="() => adminVvStore.changePage(1)" type="primary" ghost>搜索</NButton>
+        <NInput v-model:value="vvAdminStore.keyword" clearable @keyup="onInputKeyup" />
+        <NButton @click="() => vvAdminStore.changePage(1)" type="primary" ghost>搜索</NButton>
       </NInputGroup>
     </div>
     <div class="table-toolbar">
@@ -12,8 +12,8 @@
       <NButton @click="onClickDelete" secondary>删除</NButton>
     </div>
     <div class="data-table">
-      <NSpin :show="adminVvStore.loading">
-        <NDataTable :columns="dataTableColumns" :data="adminVvStore.list" :row-key="(it) => it.id" />
+      <NSpin :show="vvAdminStore.loading">
+        <NDataTable :columns="dataTableColumns" :data="vvAdminStore.list" :row-key="(it) => it.id" />
         <div>
           <NPagination v-bind="dataTablePagination">
             <template #prefix="{ itemCount }">
@@ -31,29 +31,29 @@
 <script setup lang="jsx">
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover, NSpin } from 'naive-ui'
-import { useAdminVvStore } from '#@/store/adminVv.js'
-import NewModal from '#@/pages/admin-vv/NewModal.vue'
-import DeleteModal from '#@/pages/admin-vv/DeleteModal.vue'
+import { useVvAdminStore } from '#@/store/vv-admin.js'
+import NewModal from '#@/pages/vv-admin/NewModal.vue'
+import DeleteModal from '#@/pages/vv-admin/DeleteModal.vue'
 import { isMobile } from '#@/common/utils.js'
 
-const adminVvStore = useAdminVvStore()
+const vvAdminStore = useVvAdminStore()
 
 function onClickNew() {
-  adminVvStore.showNewModal = true
+  vvAdminStore.showNewModal = true
 }
 
 function onClickDelete() {
-  adminVvStore.showDeleteModal = true
+  vvAdminStore.showDeleteModal = true
 }
 
 onMounted(async () => {
-  adminVvStore.resurrectToken()
-  adminVvStore.createGui()
-  await adminVvStore.searchVvList()
+  vvAdminStore.resurrectToken()
+  vvAdminStore.createGui()
+  await vvAdminStore.searchVvList()
 })
 
 onBeforeUnmount(() => {
-  adminVvStore.destroyGui()
+  vvAdminStore.destroyGui()
 })
 
 const dataTableColumns = [
@@ -84,21 +84,21 @@ const dataTableColumns = [
 const dataTablePagination = computed(() => {
   return {
     class: 'data-table-pagination',
-    pageSize: adminVvStore.pageSize,
-    page: adminVvStore.pageIndex,
-    pageCount: Math.ceil(adminVvStore.totalCount / adminVvStore.pageSize),
+    pageSize: vvAdminStore.pageSize,
+    page: vvAdminStore.pageIndex,
+    pageCount: Math.ceil(vvAdminStore.totalCount / vvAdminStore.pageSize),
     simple: isMobile(),
-    itemCount: adminVvStore.totalCount,
+    itemCount: vvAdminStore.totalCount,
     showQuickJumper: true,
     'onUpdate:page': async (ev) => {
-      await adminVvStore.changePage(ev)
+      await vvAdminStore.changePage(ev)
     },
   }
 })
 
 async function onInputKeyup(ev) {
   if (ev.key === 'Enter') {
-    await adminVvStore.changePage(1)
+    await vvAdminStore.changePage(1)
   }
 }
 </script>

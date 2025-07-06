@@ -1,7 +1,7 @@
 <template>
   <NModal
-    :show="adminVvStore.showNewModal"
-    @update:show="(ev) => (adminVvStore.showNewModal = ev)"
+    :show="vvAdminStore.showNewModal"
+    @update:show="(ev) => (vvAdminStore.showNewModal = ev)"
     preset="card"
     title="新增"
     style="width: 600px"
@@ -18,7 +18,7 @@
           </NUploadDragger>
         </NUpload>
         <div><strong>文件名</strong></div>
-        <NInput v-model:value="adminVvStore.newData.filename" clearable placeholder="输入文件名" />
+        <NInput v-model:value="vvAdminStore.newData.filename" clearable placeholder="输入文件名" />
       </div>
     </template>
     <template #footer>
@@ -34,16 +34,16 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { NButton, NInput, NModal, NUpload, NUploadDragger, useMessage } from 'naive-ui'
-import { useAdminVvStore } from '../../store/adminVv.js'
+import { useVvAdminStore } from '#@/store/vv-admin.js'
 
 const message = useMessage()
-const adminVvStore = useAdminVvStore()
+const vvAdminStore = useVvAdminStore()
 const saveLoading = ref(false)
 
 async function onClickSave() {
   try {
     saveLoading.value = true
-    await adminVvStore.saveNewData()
+    await vvAdminStore.saveNewData()
     message.success('新增成功')
   } catch (err) {
     message.error(err.message)
@@ -54,20 +54,20 @@ async function onClickSave() {
 
 function onSelectFile(ev) {
   const file = ev.fileList[0]
-  if (!adminVvStore.newData.filename) {
-    adminVvStore.newData.filename = file.name
+  if (!vvAdminStore.newData.filename) {
+    vvAdminStore.newData.filename = file.name
   }
-  adminVvStore.newData.getFile = () => file.file
+  vvAdminStore.newData.getFile = () => file.file
 }
 
 function onCleanData() {
-  adminVvStore.newData = {
+  vvAdminStore.newData = {
     filename: '',
     getFile: null,
   }
 }
 
 const enteredCorrectly = computed(() => {
-  return adminVvStore.newData.filename && adminVvStore.newData.getFile
+  return vvAdminStore.newData.filename && vvAdminStore.newData.getFile
 })
 </script>

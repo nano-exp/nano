@@ -4,7 +4,7 @@
     <div class="search-form">
       <NInputGroup>
         <NInput
-          v-model:value="vvStore.keyword"
+          v-model:value.trim="vvStore.keyword"
           placeholder="搜索"
           @input="onInputKeyword"
           @keyup="onInputKeyup"
