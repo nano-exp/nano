@@ -22,10 +22,10 @@ repositories {
 
 dependencies {
     // jetbrains annotations
-    implementation("org.jetbrains:annotations:24.1.0")
-    implementation("io.minio:minio:8.5.10")
+    implementation("org.jetbrains:annotations:26.0.2")
+    implementation("io.minio:minio:8.5.17")
     //
-    implementation("org.xerial:sqlite-jdbc:3.44.1.0")
+    implementation("org.xerial:sqlite-jdbc:3.50.2.0")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     compileOnly("org.projectlombok:lombok")
