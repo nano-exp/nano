@@ -13,16 +13,7 @@
     </div>
     <div class="data-table">
       <NSpin :show="adminVvStore.loading">
-        <NDataTable :columns="dataTableColumns" :data="adminVvStore.list" :row-key="(it) => it.id">
-          <template #url="{ row }">
-            <NPopover trigger="hover">
-              <template #trigger>
-                <span>{{ row.url }}</span>
-              </template>
-              <NImage width="150px" :src="row.url" preview-disabled />
-            </NPopover>
-          </template>
-        </NDataTable>
+        <NDataTable :columns="dataTableColumns" :data="adminVvStore.list" :row-key="(it) => it.id" />
         <div>
           <NPagination v-bind="dataTablePagination">
             <template #prefix="{ itemCount }">
@@ -37,7 +28,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="jsx">
 import { computed, onBeforeUnmount, onMounted } from 'vue'
 import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover, NSpin } from 'naive-ui'
 import { useAdminVvStore } from '#@/store/adminVv.js'
@@ -66,9 +57,28 @@ onBeforeUnmount(() => {
 })
 
 const dataTableColumns = [
-  { key: 'id', title: 'ID' },
-  { key: 'name', title: 'Name' },
-  { key: 'url', title: 'URL' },
+  {
+    key: 'id',
+    title: 'ID',
+  },
+  {
+    key: 'name',
+    title: 'Name',
+  },
+  {
+    key: 'url',
+    title: 'URL',
+    render({ url }) {
+      return (
+        <NPopover trigger="hover">
+          {{
+            trigger: () => url,
+            default: () => <NImage width="150px" src={url} preview-disabled />,
+          }}
+        </NPopover>
+      )
+    },
+  },
 ]
 
 const dataTablePagination = computed(() => {
