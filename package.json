@@ -16,6 +16,7 @@
   "devDependencies": {
     "@emotion/css": "^11.13.5",
     "@vitejs/plugin-vue": "^6.0.0",
+    "less": "^4.3.0",
     "lil-gui": "^0.20.0",
     "naive-ui": "^2.42.0",
     "pinia": "^3.0.3",
