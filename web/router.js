@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-const Nano = () => import('./pages/Nano.jsx')
-const Vv = () => import('./pages/vv/Vv.jsx')
-const AdminVv = () => import('./pages/admin-vv/AdminVv.jsx')
-const NotFound = () => import('./common/NotFound.jsx')
+const Nano = () => import('./pages/Nano.vue')
+const Vv = () => import('./pages/vv/Vv.vue')
+const AdminVv = () => import('./pages/admin-vv/AdminVv.vue')
+const NotFound = () => import('./common/NotFound.vue')
 
 export default createRouter({
     history: createWebHistory(),
@@ -13,4 +13,4 @@ export default createRouter({
         { path: '/admin-vv', component: AdminVv, },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound, },
     ],
-})
+}) 
