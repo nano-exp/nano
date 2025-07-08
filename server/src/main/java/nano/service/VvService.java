@@ -1,6 +1,5 @@
 package nano.service;
 
-import io.minio.ObjectWriteResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
