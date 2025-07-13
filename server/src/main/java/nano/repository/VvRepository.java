@@ -31,10 +31,10 @@ public class VvRepository {
         var sql = """
                 SELECT id, name, url, comment
                 FROM vv
-                WHERE id = :id
+                WHERE id = ?
                 """;
         return this.jdbcClient.sql(sql)
-                .param("id", id)
+                .param(id)
                 .query(Vv.class)
                 .optional()
                 .orElse(null);
@@ -44,10 +44,10 @@ public class VvRepository {
         var sql = """
                 SELECT id, name, url, comment
                 FROM vv
-                WHERE name = :name
+                WHERE name = ?
                 """;
         return this.jdbcClient.sql(sql)
-                .param("name", name)
+                .param(name)
                 .query(Vv.class)
                 .optional()
                 .orElse(null);
@@ -57,10 +57,10 @@ public class VvRepository {
         var sql = """
                 DELETE
                 FROM vv
-                WHERE id = :id
+                WHERE id = ?
                 """;
         this.jdbcClient.sql(sql)
-                .param("id", id)
+                .param(id)
                 .update();
     }
 
@@ -68,14 +68,14 @@ public class VvRepository {
         var sql = """
                 SELECT id, name, url, comment
                 FROM vv
-                WHERE name LIKE :like
+                WHERE name LIKE ?
                 ORDER BY id DESC
-                LIMIT :limit OFFSET :offset;
+                LIMIT ? OFFSET ?;
                 """;
         return this.jdbcClient.sql(sql)
-                .param("like", String.join("", "%", keyword, "%"))
-                .param("limit", limit)
-                .param("offset", offset)
+                .param(String.join("", "%", keyword, "%"))
+                .param(limit)
+                .param(offset)
                 .query(Vv.class)
                 .list();
     }
@@ -84,10 +84,10 @@ public class VvRepository {
         var sql = """
                 SELECT COUNT(*)
                 FROM vv
-                WHERE name LIKE :like;
+                WHERE name LIKE ?;
                 """;
         return this.jdbcClient.sql(sql)
-                .param("like", String.join("", "%", keyword, "%"))
+                .param(String.join("", "%", keyword, "%"))
                 .query(Integer.class)
                 .single();
     }
@@ -97,7 +97,8 @@ public class VvRepository {
                 INSERT INTO vv (name, url, comment)
                 VALUES (:name, :url, :comment);
                 """;
-        this.jdbcClient.sql(sql).paramSource(vv)
+        this.jdbcClient.sql(sql)
+                .paramSource(vv)
                 .update();
     }
 }

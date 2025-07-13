@@ -16,10 +16,7 @@ public class NanoRepository {
     private final JdbcClient jdbcClient;
 
     public @NotNull Map<String, String> getNanoMeta() {
-        var sql = """
-                SELECT `name`, `value`
-                FROM nano_meta;
-                """;
+        var sql = "SELECT `name`, `value` FROM nano_meta;";
         return this.jdbcClient.sql(sql)
                 .query(NanoMeta.class)
                 .stream()
