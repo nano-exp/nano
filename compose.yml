@@ -8,4 +8,4 @@ services:
     working_dir: /app
     volumes:
       - .:/app
-    command: ['./nano.sh']
+    command: ['./run.sh']
