@@ -1,6 +1,7 @@
 import { resolve } from 'node:path'
 import { VueLoaderPlugin } from 'vue-loader'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CopyPlugin from 'copy-webpack-plugin'
 
 const RE_RAW = /raw/
 const RE_NON_RAW = /^((?!raw).)*$/
@@ -57,6 +58,14 @@ const config = {
       template: resolve(import.meta.dirname, 'index.html'),
     }),
     new VueLoaderPlugin(),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: resolve(import.meta.dirname, 'public'),
+          to: resolve(import.meta.dirname, 'dist'),
+        },
+      ],
+    }),
   ],
   output: {
     iife: true,
