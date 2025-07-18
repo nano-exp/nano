@@ -2,45 +2,44 @@ package nano.common;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.List;
 import java.util.Map;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Json {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+  private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static @NotNull String stringify(@NotNull Object object) {
-        try {
-            return objectMapper.writeValueAsString(object);
-        } catch (JsonProcessingException ex) {
-            UnsafeUtils.sneakyThrow(ex);
-            return "";
-        }
+  public static @NotNull String stringify(@NotNull Object object) {
+    try {
+      return objectMapper.writeValueAsString(object);
+    } catch (JsonProcessingException ex) {
+      UnsafeUtils.sneakyThrow(ex);
+      return "";
     }
+  }
 
-    public static <T> @NotNull T convertValue(@NotNull Object object, @NotNull Class<T> clazz) {
-        return objectMapper.convertValue(object, clazz);
-    }
+  public static <T> @NotNull T convertValue(@NotNull Object object, @NotNull Class<T> clazz) {
+    return objectMapper.convertValue(object, clazz);
+  }
 
-    @SuppressWarnings("unchecked")
-    public static <T> List<T> parseList(String jsonString) {
-        try {
-            return (List<T>) objectMapper.readValue(jsonString, List.class);
-        } catch (JsonProcessingException ex) {
-            UnsafeUtils.sneakyThrow(ex);
-            return List.of();
-        }
+  @SuppressWarnings("unchecked")
+  public static <T> List<T> parseList(String jsonString) {
+    try {
+      return (List<T>) objectMapper.readValue(jsonString, List.class);
+    } catch (JsonProcessingException ex) {
+      UnsafeUtils.sneakyThrow(ex);
+      return List.of();
     }
+  }
 
-    @SuppressWarnings("unchecked")
-    public static <T> Map<String, T> parseMap(String jsonString) {
-        try {
-            return (Map<String, T>) objectMapper.readValue(jsonString, Map.class);
-        } catch (JsonProcessingException ex) {
-            UnsafeUtils.sneakyThrow(ex);
-            return Map.of();
-        }
+  @SuppressWarnings("unchecked")
+  public static <T> Map<String, T> parseMap(String jsonString) {
+    try {
+      return (Map<String, T>) objectMapper.readValue(jsonString, Map.class);
+    } catch (JsonProcessingException ex) {
+      UnsafeUtils.sneakyThrow(ex);
+      return Map.of();
     }
+  }
 }

@@ -38,6 +38,7 @@
     "webpack": "5.100.2",
     "webpack-cli": "6.0.1",
     "webpack-dev-server": "5.2.2",
-    "yaml-loader": "0.8.1"
+    "yaml-loader": "0.8.1",
+    "prettier-plugin-java": "2.7.1"
   }
 }

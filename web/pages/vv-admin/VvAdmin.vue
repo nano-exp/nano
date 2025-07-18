@@ -34,7 +34,7 @@ import { NButton, NDataTable, NImage, NInput, NInputGroup, NPagination, NPopover
 import { useVvAdminStore } from '#@/store/vv-admin.js'
 import NewModal from '#@/pages/vv-admin/NewModal.vue'
 import DeleteModal from '#@/pages/vv-admin/DeleteModal.vue'
-import { isMobile } from '#@/common/utils.js'
+import { isImageURL, isMobile } from '#@/common/utils.js'
 
 const vvAdminStore = useVvAdminStore()
 
@@ -69,14 +69,18 @@ const dataTableColumns = [
     key: 'url',
     title: 'URL',
     render({ url }) {
-      return (
-        <NPopover trigger="hover">
-          {{
-            trigger: () => url,
-            default: () => <NImage width="150px" src={url} preview-disabled />,
-          }}
-        </NPopover>
-      )
+      if (isImageURL(url)) {
+        return (
+          <NPopover trigger="hover">
+            {{
+              trigger: () => url,
+              default: () => <NImage width="150px" src={url} preview-disabled />,
+            }}
+          </NPopover>
+        )
+      } else {
+        return url
+      }
     },
   },
 ]

@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class NanoController {
 
-    @GetMapping("/hello")
-    @ResponseBody
-    public ResponseEntity<?> hello() {
-        return ResponseEntity.ok("hi");
-    }
+  @GetMapping("/hello")
+  @ResponseBody
+  public ResponseEntity<?> hello() {
+    return ResponseEntity.ok("hi");
+  }
 }

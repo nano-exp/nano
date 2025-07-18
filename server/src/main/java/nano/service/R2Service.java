@@ -10,52 +10,45 @@ import org.springframework.stereotype.Service;
 @Service
 public class R2Service {
 
-    private static final String BUCKET_NAME = "nano";
-    private final MinioClient r2Client;
+  private static final String BUCKET_NAME = "nano";
+  private final MinioClient r2Client;
 
-    public R2Service(Env env) {
-        this.r2Client = this.createClient(env);
+  public R2Service(Env env) {
+    this.r2Client = this.createClient(env);
+  }
+
+  public MinioClient createClient(Env env) {
+    try {
+      return MinioClient.builder()
+        .region("auto")
+        .credentials(env.R2_ACCESS_KEY, env.R2_SECRET_KEY)
+        .endpoint(env.R2_ENDPOINT)
+        .build();
+    } catch (Exception ex) {
+      return null;
     }
+  }
 
-    public MinioClient createClient(Env env) {
-        try {
-            return MinioClient.builder()
-                    .region("auto")
-                    .credentials(env.R2_ACCESS_KEY, env.R2_SECRET_KEY)
-                    .endpoint(env.R2_ENDPOINT)
-                    .build();
-        } catch (Exception ex) {
-            return null;
-        }
-    }
+  @SneakyThrows
+  public ObjectWriteResponse putObject(@NotNull Resource resource, @NotNull String objectKey, String contentType) {
+    var args = PutObjectArgs.builder()
+      .bucket(BUCKET_NAME)
+      .object(objectKey)
+      .contentType(contentType)
+      .stream(resource.getInputStream(), resource.contentLength(), -1)
+      .build();
+    return this.r2Client.putObject(args);
+  }
 
-    @SneakyThrows
-    public ObjectWriteResponse putObject(@NotNull Resource resource, @NotNull String objectKey, String contentType) {
-        var args = PutObjectArgs.builder()
-                .bucket(BUCKET_NAME)
-                .object(objectKey)
-                .contentType(contentType)
-                .stream(resource.getInputStream(), resource.contentLength(), -1)
-                .build();
-        return this.r2Client.putObject(args);
-    }
+  @SneakyThrows
+  public GetObjectResponse getObject(String objectKey) {
+    var args = GetObjectArgs.builder().bucket(BUCKET_NAME).object(objectKey).build();
+    return this.r2Client.getObject(args);
+  }
 
-    @SneakyThrows
-    public GetObjectResponse getObject(String objectKey) {
-        var args = GetObjectArgs.builder()
-                .bucket(BUCKET_NAME)
-                .object(objectKey)
-                .build();
-        return this.r2Client.getObject(args);
-    }
-
-    @SneakyThrows
-    public void removeObject(String objectKey) {
-        var args = RemoveObjectArgs.builder()
-                .bucket(BUCKET_NAME)
-                .object(objectKey)
-                .build();
-        this.r2Client.removeObject(args);
-    }
-
+  @SneakyThrows
+  public void removeObject(String objectKey) {
+    var args = RemoveObjectArgs.builder().bucket(BUCKET_NAME).object(objectKey).build();
+    this.r2Client.removeObject(args);
+  }
 }
