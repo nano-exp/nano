@@ -1,8 +1,5 @@
 package nano.service;
 
-import java.net.URI;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -68,8 +65,7 @@ public class VvService {
   }
 
   private Vv withCdn(Vv vv) {
-    var url = vv.getUrl();
-    vv.setUrl(URI.create(this.env.CDN_R2_HOST).resolve(URLEncoder.encode(url, StandardCharsets.UTF_8)).toString());
+    vv.setUrl(this.env.CDN_R2_HOST + vv.getUrl().substring(1));
     return vv;
   }
 }
