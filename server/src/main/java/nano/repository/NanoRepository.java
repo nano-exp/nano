@@ -21,4 +21,9 @@ public class NanoRepository {
       .stream()
       .collect(Collectors.toMap(NanoMeta::getName, NanoMeta::getValue));
   }
+
+  public void updateNanoMeta(String name, String value) {
+    var sql = "update nano_meta SET value = ? WHERE name = ?";
+    this.jdbcClient.sql(sql).param(name).param(value).update();
+  }
 }
