@@ -2,7 +2,7 @@ package nano.service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import lombok.Getter;
+
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,8 @@ import org.springframework.util.StreamUtils;
 @Service
 @RequiredArgsConstructor
 public class NanoService {
+
+  private static final String SU_LAN_PROXY = "SU_LAN_PROXY";
 
   private final Env env;
   private final NanoRepository nanoRepository;
@@ -41,12 +43,12 @@ public class NanoService {
   }
 
   public void updateProxySU(String value) {
-    this.nanoRepository.updateNanoMeta("SU_LAN_PROXY", value);
+    this.nanoRepository.updateNanoMeta(SU_LAN_PROXY, value);
   }
 
   @SneakyThrows
   public String getProxyPAC_SU() {
-    var proxy = this.nanoRepository.getNanoMeta().get("SU_LAN_PROXY");
+    var proxy = this.nanoRepository.getNanoMeta().get(SU_LAN_PROXY);
     return StreamUtils.copyToString(this.proxyPAC.getInputStream(), StandardCharsets.UTF_8).formatted(proxy);
   }
 }
