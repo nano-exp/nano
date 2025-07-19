@@ -1,0 +1,1 @@
+node -p "require('os').networkInterfaces().en0.find(({ family }) => family === 'IPv4').address"

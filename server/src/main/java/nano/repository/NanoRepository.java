@@ -24,6 +24,6 @@ public class NanoRepository {
 
   public void updateNanoMeta(String name, String value) {
     var sql = "update nano_meta SET value = ? WHERE name = ?";
-    this.jdbcClient.sql(sql).param(name).param(value).update();
+    this.jdbcClient.sql(sql).param(value).param(name).update();
   }
 }

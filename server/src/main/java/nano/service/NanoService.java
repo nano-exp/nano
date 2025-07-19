@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.StreamUtils;
 
 @Slf4j
@@ -36,6 +37,10 @@ public class NanoService {
   public boolean isAuthorized() {
     var incomingToken = Objects.requireNonNull(CurrentRequest.getCurrentRequest()).getHeader("X-Token");
     return Objects.equals(incomingToken, this.env.TOKEN);
+  }
+
+  public void assertAuthorized() {
+    Assert.state(this.isAuthorized(), "Not authorized");
   }
 
   public void updateProxySU(String value) {

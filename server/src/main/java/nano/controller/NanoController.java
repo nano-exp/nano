@@ -29,7 +29,8 @@ public class NanoController {
 
   @ResponseBody
   @PostMapping("/proxy-su")
-  public ResponseEntity<?> setProxySU(@RequestParam("value") String value) {
+  public ResponseEntity<?> setProxySU(@RequestBody String value) {
+    this.nanoService.assertAuthorized();
     this.nanoService.updateProxySU(value);
     return ResponseEntity.ok().build();
   }
