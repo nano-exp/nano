@@ -24,14 +24,11 @@ public class NanoService {
   private final Env env;
   private final NanoRepository nanoRepository;
 
-  @Getter
-  private String proxyPAC_SU;
+  private Resource proxyPAC;
 
-  @SneakyThrows
   @Autowired
   public void setProxyPAC_SU(@Value("classpath:proxy.pac") Resource proxyPAC) {
-    var proxy = this.nanoRepository.getNanoMeta().get("SU_LAN_PROXY");
-    this.proxyPAC_SU = StreamUtils.copyToString(proxyPAC.getInputStream(), StandardCharsets.UTF_8).formatted(proxy);
+    this.proxyPAC = proxyPAC;
   }
 
   public boolean isAuthorized() {
@@ -45,5 +42,11 @@ public class NanoService {
 
   public void updateProxySU(String value) {
     this.nanoRepository.updateNanoMeta("SU_LAN_PROXY", value);
+  }
+
+  @SneakyThrows
+  public String getProxyPAC_SU() {
+    var proxy = this.nanoRepository.getNanoMeta().get("SU_LAN_PROXY");
+    return StreamUtils.copyToString(this.proxyPAC.getInputStream(), StandardCharsets.UTF_8).formatted(proxy);
   }
 }
