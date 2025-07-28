@@ -3,6 +3,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 .idea
 .vscode/
+.claude/
 node_modules/
 dist/
 .env
