@@ -65,7 +65,7 @@ public class VvService {
   }
 
   private Vv withCdn(Vv vv) {
-    vv.setUrl(this.env.CDN_R2_HOST + vv.getUrl().substring(1));
+    vv.setUrl(this.env.getMetaEnv(Env.Name.CDN_R2_HOST) + vv.getUrl().substring(1));
     return vv;
   }
 }

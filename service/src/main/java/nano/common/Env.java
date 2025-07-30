@@ -1,34 +1,28 @@
 package nano.common;
 
-import java.util.function.Supplier;
+import static nano.common.ExceptionUtils.toValue;
+
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nano.repository.NanoRepository;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class Env {
 
-  public final String CDN_R2_HOST;
-  public final String R2_ACCESS_KEY;
-  public final String R2_SECRET_KEY;
-  public final String R2_ENDPOINT;
-  public final String TOKEN;
-
-  public Env(NanoRepository repository) {
-    var meta = getMeta(repository::getNanoMeta);
-    this.CDN_R2_HOST = meta.get("CDN_R2_HOST");
-    this.R2_ACCESS_KEY = meta.get("R2_ACCESS_KEY");
-    this.R2_SECRET_KEY = meta.get("R2_SECRET_KEY");
-    this.R2_ENDPOINT = meta.get("R2_ENDPOINT");
-    this.TOKEN = meta.get("TOKEN");
+  public enum Name {
+    CDN_R2_HOST,
+    R2_ACCESS_KEY,
+    R2_SECRET_KEY,
+    R2_ENDPOINT,
+    TOKEN,
   }
 
-  private static <T> T getMeta(Supplier<T> supplier) {
-    try {
-      return supplier.get();
-    } catch (Exception ex) {
-      throw new IllegalStateException("Can't load meta data", ex);
-    }
+  private final NanoRepository nanoRepository;
+
+  public String getMetaEnv(Name name) {
+    return toValue(() -> this.nanoRepository.getNanoMeta().get(name.name()), "Can't load meta data");
   }
 }

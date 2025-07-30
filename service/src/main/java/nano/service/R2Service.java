@@ -21,8 +21,8 @@ public class R2Service {
     try {
       return MinioClient.builder()
         .region("auto")
-        .credentials(env.R2_ACCESS_KEY, env.R2_SECRET_KEY)
-        .endpoint(env.R2_ENDPOINT)
+        .credentials(env.getMetaEnv(Env.Name.R2_ACCESS_KEY), env.getMetaEnv(Env.Name.R2_SECRET_KEY))
+        .endpoint(env.getMetaEnv(Env.Name.R2_ENDPOINT))
         .build();
     } catch (Exception ex) {
       return null;

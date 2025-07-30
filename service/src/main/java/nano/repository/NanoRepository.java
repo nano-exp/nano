@@ -1,5 +1,7 @@
 package nano.repository;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ public class NanoRepository {
     var sql = "SELECT `name`, `value` FROM nano_meta;";
     return this.jdbcClient.sql(sql)
       .query(NanoMeta.class)
+      .list()
       .stream()
       .collect(Collectors.toMap(NanoMeta::getName, NanoMeta::getValue));
   }

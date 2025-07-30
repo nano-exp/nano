@@ -2,7 +2,6 @@ package nano.service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +34,7 @@ public class NanoService {
 
   public boolean isAuthorized() {
     var incomingToken = Objects.requireNonNull(CurrentRequest.getCurrentRequest()).getHeader("X-Token");
-    return Objects.equals(incomingToken, this.env.TOKEN);
+    return Objects.equals(incomingToken, this.env.getMetaEnv(Env.Name.TOKEN));
   }
 
   public void assertAuthorized() {
