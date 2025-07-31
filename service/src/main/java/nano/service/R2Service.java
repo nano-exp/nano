@@ -2,7 +2,6 @@ package nano.service;
 
 import io.minio.*;
 import lombok.SneakyThrows;
-import nano.common.Env;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -18,15 +17,11 @@ public class R2Service {
   }
 
   public MinioClient createClient(Env env) {
-    try {
-      return MinioClient.builder()
-        .region("auto")
-        .credentials(env.getMetaEnv(Env.Name.R2_ACCESS_KEY), env.getMetaEnv(Env.Name.R2_SECRET_KEY))
-        .endpoint(env.getMetaEnv(Env.Name.R2_ENDPOINT))
-        .build();
-    } catch (Exception ex) {
-      return null;
-    }
+    return MinioClient.builder()
+      .region("auto")
+      .credentials(env.getMetaEnv(Env.Name.R2_ACCESS_KEY), env.getMetaEnv(Env.Name.R2_SECRET_KEY))
+      .endpoint(env.getMetaEnv(Env.Name.R2_ENDPOINT))
+      .build();
   }
 
   @SneakyThrows

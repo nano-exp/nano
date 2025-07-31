@@ -1,6 +1,6 @@
-package nano.common;
+package nano.service;
 
-import static nano.common.ExceptionUtils.toValue;
+import static nano.common.Ext.get;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +23,6 @@ public class Env {
   private final NanoRepository nanoRepository;
 
   public String getMetaEnv(Name name) {
-    return toValue(() -> this.nanoRepository.getNanoMeta().get(name.name()), "Can't load meta data");
+    return get(() -> this.nanoRepository.getNanoMeta().get(name.name()), "Can't load meta data");
   }
 }

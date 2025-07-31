@@ -14,7 +14,7 @@ public abstract class Json {
     try {
       return objectMapper.writeValueAsString(object);
     } catch (JsonProcessingException ex) {
-      ExceptionUtils.sneakyThrow(ex);
+      Ext.sneakyThrow(ex);
       return "";
     }
   }
@@ -28,7 +28,7 @@ public abstract class Json {
     try {
       return (List<T>) objectMapper.readValue(jsonString, List.class);
     } catch (JsonProcessingException ex) {
-      ExceptionUtils.sneakyThrow(ex);
+      Ext.sneakyThrow(ex);
       return List.of();
     }
   }
@@ -38,7 +38,7 @@ public abstract class Json {
     try {
       return (Map<String, T>) objectMapper.readValue(jsonString, Map.class);
     } catch (JsonProcessingException ex) {
-      ExceptionUtils.sneakyThrow(ex);
+      Ext.sneakyThrow(ex);
       return Map.of();
     }
   }
