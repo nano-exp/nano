@@ -1,5 +1,7 @@
 package nano.service;
 
+import static nano.service.MetaDataService.Name.*;
+
 import io.minio.*;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.NotNull;
@@ -12,16 +14,16 @@ public class R2Service {
   private static final String BUCKET_NAME = "nano";
   private final MinioClient r2Client;
 
-  public R2Service(Env env) {
-    this.r2Client = this.createClient(env);
+  public R2Service(MetaDataService metaDataService) {
+    this.r2Client = this.createClient(metaDataService);
   }
 
-  public MinioClient createClient(Env env) {
-    return MinioClient.builder()
-      .region("auto")
-      .credentials(env.getMetaEnv(Env.Name.R2_ACCESS_KEY), env.getMetaEnv(Env.Name.R2_SECRET_KEY))
-      .endpoint(env.getMetaEnv(Env.Name.R2_ENDPOINT))
-      .build();
+  public MinioClient createClient(MetaDataService metaDataService) {
+    var metaData = metaDataService.getMetaData();
+    var accessKey = metaData.get(R2_ACCESS_KEY);
+    var secretKey = metaData.get(R2_SECRET_KEY);
+    var endpoint = metaData.get(R2_ENDPOINT);
+    return MinioClient.builder().region("auto").credentials(accessKey, secretKey).endpoint(endpoint).build();
   }
 
   @SneakyThrows

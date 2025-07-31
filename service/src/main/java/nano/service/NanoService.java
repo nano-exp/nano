@@ -1,5 +1,7 @@
 package nano.service;
 
+import static nano.service.MetaDataService.Name.TOKEN;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,7 @@ public class NanoService {
 
   private static final String SU_LAN_PROXY = "SU_LAN_PROXY";
 
-  private final Env env;
+  private final MetaDataService metaDataService;
   private final NanoRepository nanoRepository;
 
   private Resource proxyPAC;
@@ -33,7 +35,7 @@ public class NanoService {
 
   public boolean isAuthorized() {
     var incomingToken = Objects.requireNonNull(CurrentRequest.getCurrentRequest()).getHeader("X-Token");
-    return Objects.equals(incomingToken, this.env.getMetaEnv(Env.Name.TOKEN));
+    return Objects.equals(incomingToken, this.metaDataService.getMetaDataValue(TOKEN));
   }
 
   public void assertAuthorized() {

@@ -1,5 +1,7 @@
 package nano.service;
 
+import static nano.service.MetaDataService.Name.CDN_R2_HOST;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -15,9 +17,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class VvService {
 
-  private final Env env;
   private final VvRepository vvRepository;
   private final R2Service r2Service;
+  private final MetaDataService metaDataService;
 
   public @NotNull List<@NotNull Vv> search(
     @NotNull final String keyword,
@@ -64,7 +66,7 @@ public class VvService {
   }
 
   private Vv withCdn(Vv vv) {
-    vv.setUrl(this.env.getMetaEnv(Env.Name.CDN_R2_HOST) + vv.getUrl().substring(1));
+    vv.setUrl(this.metaDataService.getMetaDataValue(CDN_R2_HOST) + vv.getUrl().substring(1));
     return vv;
   }
 }
